@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裏星 - 本音の夜空へ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Kosugi+Maru:wght@400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: radial-gradient(ellipse at center, #2d1b69 0%, #1a0f3d 30%, #0d0621 70%, #030014 100%);
+            color: #E0E1DD;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        /* 深層宇宙背景 - より暗く神秘的に */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(147, 51, 234, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(236, 72, 153, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 35%);
+            animation: cosmicShift 25s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        @keyframes cosmicShift {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.7; }
+            33% { transform: rotate(1deg) scale(1.02); opacity: 0.9; }
+            66% { transform: rotate(-1deg) scale(0.98); opacity: 0.8; }
+        }
+        
+        /* 星座 - より複雑で占い的 */
+        .constellation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+        
+        .constellation svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .constellation-line {
+            stroke: #a855f7;
+            stroke-width: 0.8;
+            fill: none;
+            opacity: 0.4;
+            animation: constellationPulse 12s ease-in-out infinite;
+        }
+        
+        .constellation-star {
+            animation: starPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes constellationPulse {
+            0%, 100% { opacity: 0.2; stroke: #a855f7; }
+            25% { opacity: 0.6; stroke: #ec4899; }
+            50% { opacity: 0.4; stroke: #3b82f6; }
+            75% { opacity: 0.5; stroke: #f59e0b; }
+        }
+        
+        @keyframes starPulse {
+            0%, 100% { opacity: 0.4; fill: #a855f7; }
+            50% { opacity: 0.8; fill: #f59e0b; }
+        }
+        
+        /* 進化した星屑システム */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0.3px);
+        }
+        
+        .star-mystical { 
+            background: radial-gradient(circle, #a855f7 0%, transparent 60%);
+            animation: mysticalTwinkle 5s infinite ease-in-out;
+        }
+        
+        .star-fortune { 
+            background: radial-gradient(circle, #f59e0b 0%, transparent 60%);
+            animation: fortuneTwinkle 7s infinite ease-in-out;
+        }
+        
+        .star-secret { 
+            background: radial-gradient(circle, #ec4899 0%, transparent 60%);
+            animation: secretTwinkle 4s infinite ease-in-out;
+        }
+        
+        @keyframes mysticalTwinkle {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(0.8) rotate(0deg); 
+                filter: blur(0.5px);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.4) rotate(180deg); 
+                filter: blur(0px);
+            }
+        }
+        
+        @keyframes fortuneTwinkle {
+            0%, 100% { 
+                opacity: 0.2; 
+                transform: scale(0.6) rotate(0deg); 
+            }
+            50% { 
+                opacity: 0.9; 
+                transform: scale(1.3) rotate(360deg); 
+            }
+        }
+        
+        @keyframes secretTwinkle {
+            0%, 100% { 
+                opacity: 0.4; 
+                transform: scale(1) rotate(0deg); 
+            }
+            50% { 
+                opacity: 0.8; 
+                transform: scale(1.2) rotate(-180deg); 
+            }
+        }
+        
+        /* 占い的なオーロラ効果 */
+        .divination-aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                conic-gradient(from 0deg at 30% 70%, 
+                    transparent 0deg, 
+                    rgba(147, 51, 234, 0.15) 60deg, 
+                    transparent 120deg,
+                    rgba(236, 72, 153, 0.1) 180deg,
+                    transparent 240deg,
+                    rgba(59, 130, 246, 0.08) 300deg,
+                    transparent 360deg);
+            animation: divinationFlow 30s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes divinationFlow {
+            0%, 100% { 
+                transform: rotate(0deg) scale(1);
+                opacity: 0.4;
+            }
+            33% { 
+                transform: rotate(120deg) scale(1.1);
+                opacity: 0.7;
+            }
+            66% { 
+                transform: rotate(240deg) scale(0.9);
+                opacity: 0.5;
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: rgba(3, 0, 20, 0.1);
+            backdrop-filter: blur(30px);
+        }
+        
+        /* セーフエリア対応 */
+        .safe-area-top {
+            height: env(safe-area-inset-top, 44px);
+            background: linear-gradient(to bottom, rgba(3, 0, 20, 0.9), transparent);
+        }
+        
+        /* ホーム画面 - より占い的に */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            padding: 40px 24px;
+            position: relative;
+        }
+        
+        /* 占いカード風の月 */
+        .moon-container {
+            position: relative;
+            margin-bottom: 50px;
+        }
+        
+        .moon-phase {
+            width: 100px;
+            height: 100px;
+            background: 
+                conic-gradient(from 45deg, 
+                    #a855f7 0deg, 
+                    #ec4899 120deg, 
+                    #f59e0b 240deg, 
+                    #a855f7 360deg);
+            border-radius: 50%;
+            position: relative;
+            animation: moonDivination 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.6));
+            padding: 3px;
+        }
+        
+        .moon-phase::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: 
+                radial-gradient(circle at 35% 35%, #fff 0%, #f59e0b 30%, #1a0f3d 100%);
+            border-radius: 50%;
+        }
+        
+        .moon-phase::after {
+            content: '⭐';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            z-index: 1;
+            animation: starRotate 8s linear infinite;
+        }
+        
+        @keyframes moonDivination {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.6));
+            }
+            33% { 
+                transform: scale(1.05) rotate(120deg);
+                filter: drop-shadow(0 0 35px rgba(236, 72, 153, 0.8));
+            }
+            66% { 
+                transform: scale(0.95) rotate(240deg);
+                filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.7));
+            }
+        }
+        
+        @keyframes starRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        
+        /* 占いカード風のメインカード */
+        .today-card {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(45, 27, 105, 0.3) 0%, 
+                    rgba(26, 15, 61, 0.4) 50%,
+                    rgba(13, 6, 33, 0.5) 100%);
+            backdrop-filter: blur(30px);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            border-radius: 20px;
+            padding: 32px 28px;
+            margin-bottom: 50px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(168, 85, 247, 0.2),
+                0 0 0 1px rgba(168, 85, 247, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 8s ease-in-out infinite;
+        }
+        
+        .today-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(168, 85, 247, 0.15), 
+                transparent);
+            animation: mysticalShimmer 6s infinite;
+        }
+        
+        .today-card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #a855f7);
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderGlow 4s ease-in-out infinite;
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(2deg); }
+        }
+        
+        @keyframes mysticalShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        
+        .today-card h1 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+            color: #f59e0b;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 15px rgba(245, 158, 11, 0.4);
+            position: relative;
+        }
+        
+        .today-card h1::after {
+            content: '✦';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.4; transform: translateY(-50%) rotate(0deg); }
+            50% { opacity: 1; transform: translateY(-50%) rotate(180deg); }
+        }
+        
+        .today-card p {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0.9;
+            color: #E0E1DD;
+            font-weight: 300;
+        }
+        
+        /* より占い的なボタンデザイン */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            padding: 0 12px;
+        }
+        
+        .btn {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.6s ease;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, 
+                rgba(168, 85, 247, 0.7) 0%, 
+                rgba(236, 72, 153, 0.6) 50%,
+                rgba(245, 158, 11, 0.5) 100%);
+            color: #fff;
+            font-weight: 500;
+            box-shadow: 
+                0 10px 30px rgba(168, 85, 247, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.6) 0%, 
+                rgba(147, 51, 234, 0.7) 50%,
+                rgba(168, 85, 247, 0.6) 100%);
+            color: #fff;
+            font-weight: 500;
+            box-shadow: 
+                0 10px 30px rgba(59, 130, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        /* わるいこノート画面 */
+        .notebook-screen {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            padding: 60px 24px 24px;
+            position: relative;
+        }
+        
+        .notebook-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .notebook-header::before {
+            content: '✦ ✧ ✦';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #a855f7;
+            font-size: 14px;
+            letter-spacing: 8px;
+            animation: headerSparkle 4s ease-in-out infinite;
+        }
+        
+        @keyframes headerSparkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        
+        .notebook-header h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24px;
+            color: #ec4899;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(236, 72, 153, 0.4);
+        }
+        
+        .notebook-header p {
+            font-size: 15px;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #d1d5db;
+        }
+        
+        /* 占い師の紙 */
+        .notebook-paper {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(31, 31, 31, 0.8) 0%, 
+                    rgba(45, 27, 105, 0.6) 50%,
+                    rgba(26, 15, 61, 0.8) 100%);
+            color: #e5e7eb;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 40px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(168, 85, 247, 0.1);
+            position: relative;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .notebook-paper::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 28px;
+            bottom: 28px;
+            width: 2px;
+            background: linear-gradient(to bottom, 
+                transparent, 
+                rgba(236, 72, 153, 0.6), 
+                transparent);
+        }
+        
+        .notebook-textarea {
+            width: 100%;
+            height: 200px;
+            background: transparent;
+            border: none;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #e5e7eb;
+            resize: none;
+            outline: none;
+            padding-left: 20px;
+            z-index: 1;
+            position: relative;
+        }
+        
+        .notebook-textarea::placeholder {
+            color: rgba(229, 231, 235, 0.6);
+            font-style: italic;
+        }
+        
+        /* わるいこモンスターの進化 */
+        .monster-container {
+            display: none;
+            text-align: center;
+            margin-bottom: 40px;
+            animation: monsterAppear 1s ease-out;
+        }
+        
+        @keyframes monsterAppear {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.8); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        .monster {
+            width: 80px;
+            height: 80px;
+            background: 
+                radial-gradient(circle at 30% 30%, 
+                    rgba(147, 51, 234, 0.9) 0%, 
+                    rgba(59, 130, 246, 0.7) 50%,
+                    rgba(168, 85, 247, 0.8) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            margin: 0 auto 20px;
+            animation: monsterFeast 2.5s ease-in-out infinite;
+            position: relative;
+            filter: drop-shadow(0 8px 20px rgba(147, 51, 234, 0.5));
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .monster::before {
+            content: '◉ ◉';
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #1f2937;
+            animation: monsterBlink 4s infinite;
+        }
+        
+        .monster::after {
+            content: '⌒';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #1f2937;
+        }
+        
+        @keyframes monsterFeast {
+            0%, 100% { 
+                transform: translateY(0) rotate(-3deg) scale(1);
+                filter: drop-shadow(0 8px 20px rgba(147, 51, 234, 0.5));
+            }
+            25% { 
+                transform: translateY(-5px) rotate(2deg) scale(1.05);
+                filter: drop-shadow(0 12px 25px rgba(236, 72, 153, 0.6));
+            }
+            50% { 
+                transform: translateY(-10px) rotate(-1deg) scale(1.1);
+                filter: drop-shadow(0 15px 30px rgba(59, 130, 246, 0.7));
+            }
+            75% { 
+                transform: translateY(-5px) rotate(3deg) scale(1.05);
+                filter: drop-shadow(0 12px 25px rgba(245, 158, 11, 0.6));
+            }
+        }
+        
+        @keyframes monsterBlink {
+            0%, 85%, 100% { opacity: 1; }
+            90% { opacity: 0.3; }
+        }
+        
+        .monster-message {
+            font-size: 15px;
+            color: #a855f7;
+            font-style: italic;
+            font-weight: 300;
+            text-shadow: 0 1px 8px rgba(168, 85, 247, 0.4);
+            animation: messageGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes messageGlow {
+            0%, 100% { 
+                opacity: 0.8; 
+                text-shadow: 0 1px 8px rgba(168, 85, 247, 0.4);
+            }
+            50% { 
+                opacity: 1; 
+                text-shadow: 0 2px 15px rgba(168, 85, 247, 0.7);
+            }
+        }
+        
+        /* チャット画面 */
+        .chat-screen {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            padding: 60px 20px 20px;
+        }
+        
+        .chat-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            position: relative;
+        }
+        
+        .chat-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #a855f7, transparent);
+        }
+        
+        .chat-header h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 20px;
+            color: #f59e0b;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .chat-header p {
+            font-size: 14px;
+            opacity: 0.8;
+            font-weight: 300;
+            color: #d1d5db;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding-bottom: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            animation: messageFloat 0.6s ease-out;
+        }
+        
+        @keyframes messageFloat {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-bubble {
+            max-width: 75%;
+            padding: 16px 20px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 300;
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+        
+        .message.bot .message-bubble {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(147, 51, 234, 0.2) 0%, 
+                    rgba(59, 130, 246, 0.15) 100%);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            margin-left: 12px;
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.2);
+        }
+        
+        .message.user .message-bubble {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(245, 158, 11, 0.2) 0%, 
+                    rgba(236, 72, 153, 0.15) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            margin-right: 12px;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+        
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .message.bot .avatar {
+            background: 
+                conic-gradient(from 0deg, 
+                    rgba(147, 51, 234, 0.8) 0deg, 
+                    rgba(236, 72, 153, 0.6) 120deg, 
+                    rgba(245, 158, 11, 0.8) 240deg, 
+                    rgba(147, 51, 234, 0.8) 360deg);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+            animation: avatarGlow 4s ease-in-out infinite;
+        }
+        
+        .message.user .avatar {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(245, 158, 11, 0.8) 0%, 
+                    rgba(236, 72, 153, 0.6) 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        
+        @keyframes avatarGlow {
+            0%, 100% { 
+                box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+            }
+            50% { 
+                box-shadow: 0 6px 25px rgba(147, 51, 234, 0.7);
+            }
+        }
+        
+        /* ナビゲーションの神秘的進化 */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: 
+                linear-gradient(to top, 
+                    rgba(3, 0, 20, 0.95) 0%, 
+                    rgba(13, 6, 33, 0.8) 100%);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 12px 0;
+            z-index: 1000;
+            box-shadow: 
+                0 -10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(168, 85, 247, 0.1);
+        }
+        
+        .nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 12px 8px;
+            border-radius: 16px;
+            position: relative;
+            min-width: 60px;
+        }
+        
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                conic-gradient(from 0deg, 
+                    rgba(168, 85, 247, 0.2) 0deg, 
+                    rgba(236, 72, 153, 0.1) 120deg, 
+                    rgba(245, 158, 11, 0.15) 240deg, 
+                    rgba(168, 85, 247, 0.2) 360deg);
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .nav-item:active::before,
+        .nav-item.active::before {
+            opacity: 1;
+        }
+        
+        .nav-item.active {
+            color: #f59e0b;
+            transform: translateY(-3px);
+        }
+        
+        .nav-item.active .nav-icon {
+            filter: drop-shadow(0 3px 10px rgba(245, 158, 11, 0.6));
+            animation: navIconGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes navIconGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 3px 10px rgba(245, 158, 11, 0.6));
+            }
+            50% { 
+                filter: drop-shadow(0 5px 15px rgba(245, 158, 11, 0.9));
+            }
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        /* パーティクルシステムの強化 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0.5px);
+        }
+        
+        .particle-mystical {
+            background: conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #a855f7);
+            animation: floatMystical 12s infinite ease-in-out;
+        }
+        
+        .particle-secret {
+            background: radial-gradient(circle, #ec4899 0%, transparent 60%);
+            animation: floatSecret 8s infinite ease-in-out;
+        }
+        
+        .particle-fortune {
+            background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
+            animation: floatFortune 10s infinite ease-in-out;
+        }
+        
+        @keyframes floatMystical {
+            0%, 100% { 
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.3);
+            }
+            25% { 
+                opacity: 0.8;
+                transform: translateY(75vh) translateX(30px) rotate(90deg) scale(1.2);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateY(50vh) translateX(-20px) rotate(180deg) scale(1.5);
+            }
+            75% { 
+                opacity: 0.8;
+                transform: translateY(25vh) translateX(40px) rotate(270deg) scale(1.2);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-20vh) translateX(0) rotate(360deg) scale(0.3);
+            }
+        }
+        
+        @keyframes floatSecret {
+            0%, 100% { 
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+            }
+            30% { 
+                opacity: 0.7;
+                transform: translateY(70vh) translateX(-40px) rotate(120deg) scale(1.1);
+            }
+            70% { 
+                opacity: 0.7;
+                transform: translateY(30vh) translateX(50px) rotate(240deg) scale(1.1);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-20vh) translateX(0) rotate(360deg) scale(0.5);
+            }
+        }
+        
+        @keyframes floatFortune {
+            0%, 100% { 
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.8);
+            }
+            20% { 
+                opacity: 0.9;
+                transform: translateY(80vh) translateX(25px) rotate(72deg) scale(1.3);
+            }
+            40% { 
+                opacity: 1;
+                transform: translateY(60vh) translateX(-30px) rotate(144deg) scale(1.5);
+            }
+            60% { 
+                opacity: 1;
+                transform: translateY(40vh) translateX(35px) rotate(216deg) scale(1.3);
+            }
+            80% { 
+                opacity: 0.9;
+                transform: translateY(20vh) translateX(-25px) rotate(288deg) scale(1.1);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-20vh) translateX(0) rotate(360deg) scale(0.8);
+            }
+        }
+        
+        /* 隠し要素 */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* セーフエリア対応 */
+        .safe-area-bottom {
+            height: env(safe-area-inset-bottom, 34px);
+        }
+        
+        /* レスポンシブ調整 */
+        @media (max-height: 700px) {
+            .today-card {
+                padding: 24px 20px;
+                margin-bottom: 30px;
+            }
+            
+            .moon-phase {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .action-buttons {
+                gap: 16px;
+            }
+        }
+        
+        /* ローディング状態 */
+        .loading-state {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-state::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(168, 85, 247, 0.3), 
+                transparent);
+            animation: loading-shimmer 1.5s infinite;
+        }
+        
+        @keyframes loading-shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 深層宇宙背景 -->
+    <div class="cosmic-bg"></div>
+    
+    <!-- 占いオーロラエフェクト -->
+    <div class="divination-aurora"></div>
+    
+    <!-- 星座パターン -->
+    <div class="constellation">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- 大きな占い星座 -->
+            <path class="constellation-line" d="M15,25 L35,20 L50,40 L30,55 L15,25"/>
+            <path class="constellation-line" d="M65,15 L85,30 L80,50 L65,15"/>
+            <path class="constellation-line" d="M20,75 L40,85 L55,80 L50,95"/>
+            <path class="constellation-line" d="M70,60 L90,70 L85,85 L70,75 L70,60"/>
+            
+            <!-- 占い星 -->
+            <circle class="constellation-star" cx="15" cy="25" r="1.5" fill="#a855f7" opacity="0.8"/>
+            <circle class="constellation-star" cx="35" cy="20" r="1.2" fill="#ec4899" opacity="0.7"/>
+            <circle class="constellation-star" cx="50" cy="40" r="1.8" fill="#f59e0b" opacity="0.9"/>
+            <circle class="constellation-star" cx="30" cy="55" r="1" fill="#3b82f6" opacity="0.6"/>
+            <circle class="constellation-star" cx="65" cy="15" r="1.4" fill="#a855f7" opacity="0.8"/>
+            <circle class="constellation-star" cx="85" cy="30" r="1.3" fill="#f59e0b" opacity="0.9"/>
+            <circle class="constellation-star" cx="80" cy="50" r="1.1" fill="#ec4899" opacity="0.7"/>
+            <circle class="constellation-star" cx="70" cy="60" r="1.6" fill="#3b82f6" opacity="0.8"/>
+        </svg>
+    </div>
+    
+    <!-- 進化した星屑システム -->
+    <div class="stars" id="starsContainer"></div>
+    
+    <!-- パーティクルエフェクト -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <!-- セーフエリア対応 -->
+        <div class="safe-area-top"></div>
+        
+        <!-- ホーム画面 -->
+        <div class="home-screen" id="homeScreen">
+            <div class="moon-container">
+                <div class="moon-phase"></div>
+            </div>
+            <div class="today-card">
+                <h1>裏星からの便り</h1>
+                <p>夜空の向こうの占い師が、あなたの本音を読み取ろうと待っています。心の奥に秘めた想いを、星々に託してみませんか。</p>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showChat()">
+                    🔮 占い師と語る
+                </button>
+                <button class="btn btn-secondary" onclick="showNotebook()">
+                    🌙 わるいこを預ける
+                </button>
+            </div>
+        </div>
+        
+        <!-- わるいこノート画面 -->
+        <div class="notebook-screen" id="notebookScreen">
+            <div class="notebook-header">
+                <h2>わるいこポスト</h2>
+                <p>今日のイライラやモヤモヤを、ここにポイッと投げ込んで</p>
+            </div>
+            <div class="notebook-paper">
+                <textarea class="notebook-textarea" id="notebookText" 
+                    placeholder="今日のイライラ、ちょっとした愚痴、なんとなくモヤモヤした気持ち...ここに書いておけば、わるいこたちが食べてくれます"></textarea>
+            </div>
+            <div class="monster-container" id="monsterContainer">
+                <div class="monster"></div>
+                <p class="monster-message">わるいこたちが美味しそうに食べていきました...♪</p>
+            </div>
+            <button class="btn btn-primary" onclick="feedMonster()">
+                わるいこに食べてもらう
+            </button>
+        </div>
+        
+        <!-- チャット画面 -->
+        <div class="chat-screen" id="chatScreen">
+            <div class="chat-header">
+                <h2>裏星の占い師</h2>
+                <p>この神秘なる空間で、あなたの心を占わせてください</p>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="avatar">🔮</div>
+                    <div class="message-bubble">
+                        こんばんは。私は裏星の占い師です。星々があなたについて何かを語りかけています。まずは今、心に一番重くのしかかっていることを教えてもらえますか？占いを通じて、その答えを探してみましょう。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- セーフエリア対応 -->
+        <div class="safe-area-bottom"></div>
+    </div>
+    
+    <!-- ナビゲーションバー -->
+    <div class="nav-bar">
+        <div class="nav-items">
+            <div class="nav-item active" onclick="showHome()">
+                <div class="nav-icon">🏛️</div>
+                <div class="nav-label">神殿</div>
+            </div>
+            <div class="nav-item" onclick="showChat()">
+                <div class="nav-icon">🔮</div>
+                <div class="nav-label">占い</div>
+            </div>
+            <div class="nav-item" onclick="showNotebook()">
+                <div class="nav-icon">📝</div>
+                <div class="nav-label">わるいこ</div>
+            </div>
+            <div class="nav-item" onclick="showArchive()">
+                <div class="nav-icon">⭐</div>
+                <div class="nav-label">記録</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 初期化とセットアップ
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDivinationStars();
+            initializeMysticalParticles();
+            setupMysticalFeedback();
+            
+            // セーフエリア対応
+            if (window.navigator.userAgent.indexOf('iPhone') > -1) {
+                document.body.style.paddingTop = 'env(safe-area-inset-top)';
+                document.body.style.paddingBottom = 'env(safe-area-inset-bottom)';
+            }
+        });
+        
+        // 占い的星屑システム
+        function initializeDivinationStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const starTypes = ['star-mystical', 'star-fortune', 'star-secret'];
+            
+            for (let i = 0; i < 40; i++) {
+                const star = document.createElement('div');
+                const type = starTypes[Math.floor(Math.random() * starTypes.length)];
+                const size = Math.random() * 4 + 1;
+                
+                star.className = `star ${type}`;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                starsContainer.appendChild(star);
+            }
+            
+            // 占い的流星の定期生成
+            setInterval(createDivinationMeteor, 8000);
+        }
+        
+        function createDivinationMeteor() {
+            const meteor = document.createElement('div');
+            const colors = ['#a855f7', '#ec4899', '#f59e0b'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            meteor.style.cssText = `
+                position: absolute;
+                width: 3px;
+                height: 3px;
+                background: ${color};
+                border-radius: 50%;
+                top: ${Math.random() * 30}%;
+                left: ${Math.random() * 100}%;
+                animation: divinationShoot 4s ease-out;
+                box-shadow: 0 0 15px ${color}, -40px 40px 20px ${color}33;
+                z-index: 3;
+            `;
+            
+            document.querySelector('.stars').appendChild(meteor);
+            
+            setTimeout(() => meteor.remove(), 4000);
+        }
+        
+        // 神秘的パーティクルシステム
+        function initializeMysticalParticles() {
+            const particles = document.getElementById('particles');
+            const particleTypes = ['particle-mystical', 'particle-secret', 'particle-fortune'];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+                const size = Math.random() * 6 + 2;
+                
+                particle.className = `particle ${type}`;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                
+                particles.appendChild(particle);
+            }
+        }
+        
+        // 神秘的フィードバック
+        function setupMysticalFeedback() {
+            const buttons = document.querySelectorAll('.btn, .nav-item');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    if (navigator.vibrate) {
+                        navigator.vibrate([10, 5, 10]);
+                    }
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        }
+        
+        // 画面遷移（神秘的アニメーション）
+        function showHome() {
+            transitionToScreen('homeScreen', 0);
+        }
+        
+        function showChat() {
+            transitionToScreen('chatScreen', 1);
+        }
+        
+        function showNotebook() {
+            transitionToScreen('notebookScreen', 2);
+        }
+        
+        function showArchive() {
+            updateActiveNav(3);
+        }
+        
+        function transitionToScreen(targetScreen, navIndex) {
+            const currentScreens = document.querySelectorAll('.home-screen, .chat-screen, .notebook-screen');
+            
+            // フェードアウト with 神秘的エフェクト
+            currentScreens.forEach(screen => {
+                screen.style.opacity = '0';
+                screen.style.transform = 'translateY(30px) scale(0.95)';
+                screen.style.filter = 'blur(5px)';
+            });
+            
+            setTimeout(() => {
+                document.getElementById('homeScreen').style.display = 'none';
+                document.getElementById('chatScreen').style.display = 'none';
+                document.getElementById('notebookScreen').style.display = 'none';
+                
+                const target = document.getElementById(targetScreen);
+                target.style.display = 'flex';
+                target.style.opacity = '0';
+                target.style.transform = 'translateY(30px) scale(0.95)';
+                target.style.filter = 'blur(5px)';
+                
+                // 神秘的フェードイン
+                setTimeout(() => {
+                    target.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    target.style.opacity = '1';
+                    target.style.transform = 'translateY(0) scale(1)';
+                    target.style.filter = 'blur(0px)';
+                }, 100);
+                
+                updateActiveNav(navIndex);
+            }, 300);
+        }
+        
+        function updateActiveNav(index) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+        
+        // 強化されたわるいこモンスター機能
+        function feedMonster() {
+            const text = document.getElementById('notebookText').value;
+            if (text.trim() === '') {
+                showMysticalAlert('今日のわるいこを書いてから、食べてもらいましょう♪');
+                return;
+            }
+            
+            const btn = event.target;
+            btn.classList.add('loading-state');
+            btn.textContent = 'わるいこたちが食べています...';
+            
+            setTimeout(() => {
+                const container = document.getElementById('monsterContainer');
+                container.style.display = 'block';
+                
+                // より神秘的なパーティクルエフェクト
+                createDivinationParticles();
+                
+                setTimeout(() => {
+                    document.getElementById('notebookText').value = '';
+                    container.style.display = 'none';
+                    btn.classList.remove('loading-state');
+                    btn.textContent = 'わるいこに食べてもらう';
+                    
+                    showMysticalAlert('わるいこたちのおかげで、心がすっきりしました✨');
+                }, 4000);
+            }, 1200);
+        }
+        
+        // 占い的パーティクルエフェクト
+        function createDivinationParticles() {
+            const particles = document.getElementById('particles');
+            const colors = ['#a855f7', '#ec4899', '#f59e0b', '#3b82f6'];
+            
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 8 + 3;
+                
+                particle.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: conic-gradient(from ${Math.random() * 360}deg, ${color}, transparent, ${color});
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    bottom: 0;
+                    animation: divinationFloat ${Math.random() * 4 + 3}s ease-out forwards;
+                    z-index: 10;
+                `;
+                
+                particles.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 7000);
+            }
+        }
+        
+        // 神秘的アラート
+        function showMysticalAlert(message) {
+            const alert = document.createElement('div');
+            alert.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: 
+                    conic-gradient(from 0deg, 
+                        rgba(168, 85, 247, 0.9) 0deg, 
+                        rgba(45, 27, 105, 0.95) 120deg, 
+                        rgba(236, 72, 153, 0.9) 240deg, 
+                        rgba(168, 85, 247, 0.9) 360deg);
+                backdrop-filter: blur(30px);
+                border: 2px solid rgba(245, 158, 11, 0.4);
+                border-radius: 20px;
+                padding: 28px 24px;
+                color: #E0E1DD;
+                font-family: 'Zen Kaku Gothic New', sans-serif;
+                font-size: 15px;
+                text-align: center;
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.7),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                z-index: 1000;
+                opacity: 0;
+                animation: mysticalAlertShow 0.6s ease-out forwards;
+                max-width: 320px;
+                line-height: 1.7;
+            `;
+            alert.textContent = message;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'mysticalAlertHide 0.6s ease-out forwards';
+                setTimeout(() => alert.remove(), 600);
+            }, 3000);
+        }
+        
+        // CSSアニメーションの動的追加
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes divinationFloat {
+                0% { 
+                    opacity: 0;
+                    transform: translateY(0) rotate(0deg) scale(0.5);
+                }
+                20% { 
+                    opacity: 1;
+                    transform: translateY(-150px) rotate(120deg) scale(1);
+                }
+                80% { 
+                    opacity: 1;
+                    transform: translateY(-300px) rotate(300deg) scale(1.2);
+                }
+                100% { 
+                    opacity: 0;
+                    transform: translateY(-400px) rotate(720deg) scale(0.3);
+                }
+            }
+            
+            @keyframes divinationShoot {
+                0% { 
+                    opacity: 0;
+                    transform: translateX(-150px) translateY(150px);
+                }
+                15% { 
+                    opacity: 1;
+                }
+                85% { 
+                    opacity: 1;
+                }
+                100% { 
+                    opacity: 0;
+                    transform: translateX(250px) translateY(-250px);
+                }
+            }
+            
+            @keyframes mysticalAlertShow {
+                0% { 
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.7) rotate(-5deg);
+                }
+                100% { 
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                }
+            }
+            
+            @keyframes mysticalAlertHide {
+                0% { 
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                }
+                100% { 
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.7) rotate(5deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
