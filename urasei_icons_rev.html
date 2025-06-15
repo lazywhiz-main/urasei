@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裏星 - オリジナルアイコン</title>
+    <style>
+        body {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: linear-gradient(135deg, #1a0f3d 0%, #0d0621 100%);
+            color: #E0E1DD;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #f59e0b;
+            font-size: 32px;
+            letter-spacing: 2px;
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .icon-section {
+            background: rgba(45, 27, 105, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .icon-section h2 {
+            color: #ec4899;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .icon-showcase {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .icon-demo {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 120px;
+        }
+        
+        .icon-demo svg {
+            transition: all 0.3s ease;
+        }
+        
+        .icon-demo:hover svg {
+            transform: scale(1.1);
+        }
+        
+        .icon-demo span {
+            font-size: 12px;
+            color: #a855f7;
+        }
+        
+        .icon-variations {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .size-demo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+        
+        .implementation-section {
+            background: rgba(13, 6, 33, 0.5);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .implementation-section h2 {
+            color: #f59e0b;
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        /* アニメーション */
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .rotate {
+            animation: rotate 4s linear infinite;
+        }
+        
+        .glow {
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>裏星 - オリジナルアイコンセット</h1>
+        
+        <div class="icon-grid">
+            <!-- ナビゲーションアイコン -->
+            <div class="icon-section">
+                <h2>ナビゲーションアイコン</h2>
+                
+                <div class="icon-showcase">
+                    <!-- 神殿アイコン -->
+                    <div class="icon-demo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" class="glow">
+                            <defs>
+                                <linearGradient id="templeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#a855f7"/>
+                                    <stop offset="50%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#f59e0b"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 神殿の柱 -->
+                            <rect x="8" y="15" width="3" height="20" fill="url(#templeGrad)" opacity="0.8"/>
+                            <rect x="14" y="12" width="3" height="23" fill="url(#templeGrad)"/>
+                            <rect x="20" y="10" width="3" height="25" fill="url(#templeGrad)"/>
+                            <rect x="26" y="12" width="3" height="23" fill="url(#templeGrad)"/>
+                            <rect x="32" y="15" width="3" height="20" fill="url(#templeGrad)" opacity="0.8"/>
+                            <!-- 屋根 -->
+                            <polygon points="5,15 20,5 35,15" fill="url(#templeGrad)" opacity="0.9"/>
+                            <!-- 基礎 -->
+                            <rect x="6" y="35" width="28" height="3" fill="url(#templeGrad)" opacity="0.7"/>
+                            <!-- 星の装飾 -->
+                            <circle cx="20" cy="25" r="2" fill="#fff" opacity="0.8">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        <span>神殿</span>
+                    </div>
+                    
+                    <!-- 占いアイコン -->
+                    <div class="icon-demo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" class="pulse">
+                            <defs>
+                                <radialGradient id="crystalGrad" cx="50%" cy="30%">
+                                    <stop offset="0%" style="stop-color:#fff" opacity="0.8"/>
+                                    <stop offset="40%" style="stop-color:#a855f7"/>
+                                    <stop offset="100%" style="stop-color:#1a0f3d"/>
+                                </radialGradient>
+                            </defs>
+                            <!-- 水晶球の台 -->
+                            <ellipse cx="20" cy="32" rx="12" ry="4" fill="url(#templeGrad)" opacity="0.6"/>
+                            <!-- 水晶球 -->
+                            <circle cx="20" cy="20" r="12" fill="url(#crystalGrad)" stroke="#a855f7" stroke-width="1" opacity="0.9"/>
+                            <!-- 内部の星 -->
+                            <polygon points="20,14 21,17 24,17 21.5,19 22.5,22 20,20 17.5,22 18.5,19 16,17 19,17" fill="#f59e0b" opacity="0.8">
+                                <animateTransform attributeName="transform" type="rotate" values="0 20 20;360 20 20" dur="8s" repeatCount="indefinite"/>
+                            </polygon>
+                            <!-- ハイライト -->
+                            <ellipse cx="17" cy="16" rx="3" ry="2" fill="#fff" opacity="0.4"/>
+                        </svg>
+                        <span>占い</span>
+                    </div>
+                    
+                    <!-- わるいこアイコン -->
+                    <div class="icon-demo">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <defs>
+                                <linearGradient id="monsterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#9333ea"/>
+                                    <stop offset="50%" style="stop-color:#3b82f6"/>
+                                    <stop offset="100%" style="stop-color:#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- わるいこの体 -->
+                            <ellipse cx="20" cy="25" rx="13" ry="10" fill="url(#monsterGrad)" opacity="0.9">
+                                <animateTransform attributeName="transform" type="scale" values="1;1.05;1" dur="2s" repeatCount="indefinite"/>
+                            </ellipse>
+                            <!-- 目 -->
+                            <circle cx="16" cy="22" r="2" fill="#1f2937"/>
+                            <circle cx="24" cy="22" r="2" fill="#1f2937"/>
+                            <!-- 瞳 -->
+                            <circle cx="16.5" cy="21.5" r="0.8" fill="#fff"/>
+                            <circle cx="24.5" cy="21.5" r="0.8" fill="#fff"/>
+                            <!-- 口 -->
+                            <path d="M 15 28 Q 20 32 25 28" stroke="#1f2937" stroke-width="2" fill="none"/>
+                            <!-- 小さな角 -->
+                            <polygon points="17,12 19,8 21,12" fill="url(#monsterGrad)" opacity="0.7"/>
+                            <polygon points="19,11 21,7 23,11" fill="url(#monsterGrad)" opacity="0.7"/>
+                            <!-- パーティクル -->
+                            <circle cx="10" cy="15" r="1" fill="#ec4899" opacity="0.6">
+                                <animate attributeName="cy" values="15;10;15" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="30" cy="18" r="1.5" fill="#f59e0b" opacity="0.7">
+                                <animate attributeName="cy" values="18;12;18" dur="2.5s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        <span>わるいこ</span>
+                    </div>
+                    
+                    <!-- 記録アイコン -->
+                    <div class="icon-demo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" class="rotate">
+                            <defs>
+                                <radialGradient id="starGrad" cx="50%" cy="50%">
+                                    <stop offset="0%" style="stop-color:#fff"/>
+                                    <stop offset="30%" style="stop-color:#f59e0b"/>
+                                    <stop offset="100%" style="stop-color:#ec4899"/>
+                                </radialGradient>
+                            </defs>
+                            <!-- 星座の線 -->
+                            <path d="M 8,12 L 15,8 L 25,15 L 32,10 L 30,20 L 20,25 L 10,22 Z" 
+                                  stroke="url(#templeGrad)" stroke-width="1.5" fill="none" opacity="0.6"/>
+                            <!-- 星々 -->
+                            <polygon points="8,12 9,9 12,9 9.5,7 10.5,4 8,6 5.5,4 6.5,7 4,9 7,9" fill="url(#starGrad)" opacity="0.8"/>
+                            <polygon points="15,8 16,6 18,6 16.5,4.5 17,2 15,3.5 13,2 13.5,4.5 12,6 14,6" fill="url(#starGrad)" opacity="0.9"/>
+                            <polygon points="25,15 26,13 28,13 26.5,11.5 27,9 25,10.5 23,9 23.5,11.5 22,13 24,13" fill="url(#starGrad)"/>
+                            <polygon points="32,10 33,8 35,8 33.5,6.5 34,4 32,5.5 30,4 30.5,6.5 29,8 31,8" fill="url(#starGrad)" opacity="0.7"/>
+                            <polygon points="30,20 31,18 33,18 31.5,16.5 32,14 30,15.5 28,14 28.5,16.5 27,18 29,18" fill="url(#starGrad)" opacity="0.8"/>
+                            <polygon points="20,25 21,23 23,23 21.5,21.5 22,19 20,20.5 18,19 18.5,21.5 17,23 19,23" fill="url(#starGrad)" opacity="0.9"/>
+                            <polygon points="10,22 11,20 13,20 11.5,18.5 12,16 10,17.5 8,16 8.5,18.5 7,20 9,20" fill="url(#starGrad)" opacity="0.6"/>
+                        </svg>
+                        <span>記録</span>
+                    </div>
+                </div>
+                
+                <p style="font-size: 14px; opacity: 0.8; margin-top: 20px;">
+                    各アイコンにアニメーション効果を追加。神殿は光る装飾、占いは回転する星、わるいこは呼吸アニメーション、記録は星座の回転
+                </p>
+            </div>
+            
+            <!-- アクションアイコン -->
+            <div class="icon-section">
+                <h2>アクションアイコン</h2>
+                
+                <div class="icon-showcase">
+                    <!-- 占い師と語る -->
+                    <div class="icon-demo">
+                        <svg width="50" height="50" viewBox="0 0 50 50">
+                            <defs>
+                                <linearGradient id="talkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#a855f7"/>
+                                    <stop offset="50%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#f59e0b"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 吹き出し -->
+                            <ellipse cx="25" cy="20" rx="18" ry="12" fill="url(#talkGrad)" opacity="0.2" stroke="url(#talkGrad)" stroke-width="2"/>
+                            <polygon points="20,30 25,35 15,32" fill="url(#talkGrad)" opacity="0.3"/>
+                            <!-- 水晶球 -->
+                            <circle cx="25" cy="20" r="8" fill="url(#crystalGrad)" opacity="0.8"/>
+                            <!-- 魔法の粒子 -->
+                            <circle cx="15" cy="15" r="1" fill="#f59e0b" opacity="0.8">
+                                <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="35" cy="25" r="1.5" fill="#ec4899" opacity="0.7">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="30" cy="10" r="1" fill="#a855f7" opacity="0.9">
+                                <animate attributeName="opacity" values="0.4;1;0.4" dur="1.8s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        <span>占い師と語る</span>
+                    </div>
+                    
+                    <!-- わるいこを預ける -->
+                    <div class="icon-demo">
+                        <svg width="50" height="50" viewBox="0 0 50 50">
+                            <defs>
+                                <linearGradient id="depositGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3b82f6"/>
+                                    <stop offset="50%" style="stop-color:#9333ea"/>
+                                    <stop offset="100%" style="stop-color:#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- ポストボックス -->
+                            <rect x="15" y="20" width="20" height="25" rx="3" fill="url(#depositGrad)" opacity="0.8"/>
+                            <rect x="12" y="18" width="26" height="4" rx="2" fill="url(#depositGrad)"/>
+                            <!-- 投入口 -->
+                            <rect x="20" y="25" width="10" height="2" rx="1" fill="#1a0f3d"/>
+                            <!-- わるいこ（投入される） -->
+                            <circle cx="25" cy="12" r="6" fill="url(#monsterGrad)" opacity="0.9">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;0,15;0,25" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;0.5;0" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <!-- 目 -->
+                            <circle cx="23" cy="11" r="1" fill="#1f2937">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;0,15;0,25" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;0.5;0" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="27" cy="11" r="1" fill="#1f2937">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;0,15;0,25" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.9;0.5;0" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <!-- 星のエフェクト -->
+                            <polygon points="8,35 9,32 12,32 9.5,30 10.5,27 8,29 5.5,27 6.5,30 4,32 7,32" fill="#f59e0b" opacity="0.6">
+                                <animate attributeName="opacity" values="0;0.8;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </polygon>
+                        </svg>
+                        <span>わるいこを預ける</span>
+                    </div>
+                    
+                    <!-- 浄化する（新規追加） -->
+                    <div class="icon-demo">
+                        <svg width="50" height="50" viewBox="0 0 50 50">
+                            <defs>
+                                <radialGradient id="purifyGrad" cx="50%" cy="50%">
+                                    <stop offset="0%" style="stop-color:#fff" opacity="0.9"/>
+                                    <stop offset="30%" style="stop-color:#f59e0b" opacity="0.8"/>
+                                    <stop offset="60%" style="stop-color:#ec4899" opacity="0.6"/>
+                                    <stop offset="100%" style="stop-color:#a855f7" opacity="0.4"/>
+                                </radialGradient>
+                                <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#f59e0b"/>
+                                    <stop offset="50%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- 浄化の炎 -->
+                            <ellipse cx="25" cy="40" rx="8" ry="3" fill="url(#flameGrad)" opacity="0.3">
+                                <animateTransform attributeName="transform" type="scale" values="1;1.2;1" dur="2s" repeatCount="indefinite"/>
+                            </ellipse>
+                            
+                            <!-- メインの炎 -->
+                            <path d="M 25,40 Q 20,35 22,28 Q 18,25 20,20 Q 25,25 25,15 Q 30,25 30,20 Q 32,25 28,28 Q 30,35 25,40" 
+                                  fill="url(#flameGrad)" opacity="0.8">
+                                <animateTransform attributeName="transform" type="scale" values="1;1.1;0.95;1" dur="1.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.6;1;0.8;0.6" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- 内側の白い炎 -->
+                            <path d="M 25,35 Q 22,32 23,27 Q 21,25 22,22 Q 25,26 25,18 Q 28,26 28,22 Q 29,25 27,27 Q 28,32 25,35" 
+                                  fill="#fff" opacity="0.7">
+                                <animateTransform attributeName="transform" type="scale" values="0.8;1;0.9;0.8" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- 浄化エネルギーの円環 -->
+                            <circle cx="25" cy="25" r="18" fill="none" stroke="url(#purifyGrad)" stroke-width="2" opacity="0.6">
+                                <animateTransform attributeName="transform" type="rotate" values="0 25 25;360 25 25" dur="8s" repeatCount="indefinite"/>
+                                <animate attributeName="stroke-dasharray" values="0 113;56 57;0 113" dur="4s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- 内側の円環 -->
+                            <circle cx="25" cy="25" r="12" fill="none" stroke="url(#purifyGrad)" stroke-width="1.5" opacity="0.4">
+                                <animateTransform attributeName="transform" type="rotate" values="360 25 25;0 25 25" dur="6s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- 浄化の星屑 -->
+                            <polygon points="10,15 11,12 14,12 11.5,10 12.5,7 10,9 7.5,7 8.5,10 6,12 9,12" fill="#fff" opacity="0.8">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;3,-2;6,-4" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;0.8;0" dur="3s" repeatCount="indefinite"/>
+                            </polygon>
+                            
+                            <polygon points="40,20 41,17 44,17 41.5,15 42.5,12 40,14 37.5,12 38.5,15 36,17 39,17" fill="#f59e0b" opacity="0.7">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;-2,-3;-4,-6" dur="2.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;0.7;0" dur="2.5s" repeatCount="indefinite"/>
+                            </polygon>
+                            
+                            <polygon points="35,8 36,5 39,5 36.5,3 37.5,0 35,2 32.5,0 33.5,3 31,5 34,5" fill="#ec4899" opacity="0.9">
+                                <animateTransform attributeName="transform" type="translate" values="0,0;-1,-2;-2,-4" dur="3.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0;0.9;0" dur="3.5s" repeatCount="indefinite"/>
+                            </polygon>
+                            
+                            <!-- わるいこ（浄化される前） -->
+                            <ellipse cx="25" cy="28" rx="4" ry="3" fill="url(#monsterGrad)" opacity="0.6">
+                                <animate attributeName="opacity" values="0.6;0.3;0;0;0.6" dur="4s" repeatCount="indefinite"/>
+                                <animateTransform attributeName="transform" type="scale" values="1;0.8;0.5;0.3;1" dur="4s" repeatCount="indefinite"/>
+                            </ellipse>
+                        </svg>
+                        <span>浄化する</span>
+                    </div>
+                </div>
+                
+                <p style="font-size: 14px; opacity: 0.8; margin-top: 20px;">
+                    浄化アイコンは神聖な炎と光の円環で、わるいこが星屑に変わる瞬間を表現。儀式的な特別感を演出
+                </p>
+            </div>
+            
+            <!-- 機能アイコン -->
+            <div class="icon-section">
+                <h2>機能アイコン</h2>
+                
+                <div class="icon-showcase">
+                    <!-- 設定 -->
+                    <div class="icon-demo">
+                        <svg width="30" height="30" viewBox="0 0 30 30" class="rotate">
+                            <defs>
+                                <linearGradient id="settingsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#6366f1"/>
+                                    <stop offset="100%" style="stop-color:#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 星形の設定ギア -->
+                            <polygon points="15,2 17,8 23,6 19,12 25,15 19,18 23,24 17,22 15,28 13,22 7,24 11,18 5,15 11,12 7,6 13,8" 
+                                     fill="url(#settingsGrad)" opacity="0.8"/>
+                            <circle cx="15" cy="15" r="4" fill="#1a0f3d"/>
+                            <circle cx="15" cy="15" r="2" fill="url(#settingsGrad)"/>
+                        </svg>
+                        <span>設定</span>
+                    </div>
+                    
+                    <!-- 通知 -->
+                    <div class="icon-demo">
+                        <svg width="30" height="30" viewBox="0 0 30 30">
+                            <defs>
+                                <linearGradient id="notifGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f59e0b"/>
+                                    <stop offset="100%" style="stop-color:#ec4899"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 鐘 -->
+                            <path d="M 15,5 Q 10,8 10,15 Q 8,18 6,20 L 24,20 Q 22,18 20,15 Q 20,8 15,5 Z" 
+                                  fill="url(#notifGrad)" opacity="0.8"/>
+                            <rect x="13" y="22" width="4" height="3" rx="2" fill="url(#notifGrad)" opacity="0.6"/>
+                            <!-- 星の装飾 -->
+                            <polygon points="15,12 16,9 19,9 16.5,7 17.5,4 15,6 12.5,4 13.5,7 11,9 14,9" fill="#fff" opacity="0.7">
+                                <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+                            </polygon>
+                        </svg>
+                        <span>通知</span>
+                    </div>
+                    
+                    <!-- プロフィール -->
+                    <div class="icon-demo">
+                        <svg width="30" height="30" viewBox="0 0 30 30">
+                            <defs>
+                                <linearGradient id="profileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                    <stop offset="100%" style="stop-color:#06b6d4"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- オーラ -->
+                            <circle cx="15" cy="15" r="14" fill="none" stroke="url(#profileGrad)" stroke-width="1" opacity="0.3">
+                                <animate attributeName="r" values="12;16;12" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <!-- 顔 -->
+                            <circle cx="15" cy="12" r="6" fill="url(#profileGrad)" opacity="0.8"/>
+                            <circle cx="13" cy="10" r="1" fill="#1a0f3d"/>
+                            <circle cx="17" cy="10" r="1" fill="#1a0f3d"/>
+                            <path d="M 13 14 Q 15 16 17 14" stroke="#1a0f3d" stroke-width="1" fill="none"/>
+                            <!-- 体 -->
+                            <ellipse cx="15" cy="22" rx="4" ry="6" fill="url(#profileGrad)" opacity="0.6"/>
+                        </svg>
+                        <span>プロフィール</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 実装例 -->
+        <div class="implementation-section">
+            <h2>実装例 - アニメーション付きナビゲーション</h2>
+            
+            <div class="code-block">
+&lt;div class="nav-item active"&gt;
+    &lt;div class="nav-icon"&gt;
+        &lt;svg width="24" height="24" viewBox="0 0 40 40" class="temple-icon"&gt;
+            &lt;!-- 神殿アイコンのSVGコード --&gt;
+        &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;div class="nav-label"&gt;神殿&lt;/div&gt;
+&lt;/div&gt;
+            </div>
+            
+            <div class="code-block">
+.temple-icon {
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+    transition: all 0.3s ease;
+}
+
+.nav-item.active .temple-icon {
+    animation: iconGlow 2s ease-in-out infinite;
+}
+
+@keyframes iconGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6)); }
+    50% { filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.9)); }
+}
+            </div>
+            
+            <h3 style="color: #ec4899; margin: 30px 0 15px;">浄化ボタンの使用例</h3>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 25px; margin: 20px 0;">
+                <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                    <!-- ステップ1: わるいこを預ける -->
+                    <div style="display: flex; align-items: center; gap: 15px; background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 8px; width: 100%; max-width: 400px;">
+                        <svg width="30" height="30" viewBox="0 0 50 50">
+                            <rect x="15" y="20" width="20" height="25" rx="3" fill="url(#depositGrad)" opacity="0.8"/>
+                            <rect x="12" y="18" width="26" height="4" rx="2" fill="url(#depositGrad)"/>
+                            <rect x="20" y="25" width="10" height="2" rx="1" fill="#1a0f3d"/>
+                            <circle cx="25" cy="12" r="6" fill="url(#monsterGrad)" opacity="0.7"/>
+                            <circle cx="23" cy="11" r="1" fill="#1f2937"/>
+                            <circle cx="27" cy="11" r="1" fill="#1f2937"/>
+                        </svg>
+                        <div>
+                            <h4 style="color: #3b82f6; margin-bottom: 5px;">Step 1: わるいこを預ける</h4>
+                            <p style="font-size: 12px; opacity: 0.8;">今日のイライラやモヤモヤを書いて投函</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 矢印 -->
+                    <div style="color: #f59e0b; font-size: 20px;">↓</div>
+                    
+                    <!-- ステップ2: 浄化する -->
+                    <div style="display: flex; align-items: center; gap: 15px; background: rgba(245, 158, 11, 0.1); padding: 15px; border-radius: 8px; width: 100%; max-width: 400px;">
+                        <svg width="30" height="30" viewBox="0 0 50 50">
+                            <path d="M 25,35 Q 22,32 23,27 Q 21,25 22,22 Q 25,26 25,18 Q 28,26 28,22 Q 29,25 27,27 Q 28,32 25,35" fill="#f59e0b" opacity="0.8"/>
+                            <circle cx="25" cy="25" r="18" fill="none" stroke="url(#purifyGrad)" stroke-width="1.5" opacity="0.4"/>
+                            <polygon points="10,15 11,12 14,12 11.5,10 12.5,7 10,9 7.5,7 8.5,10 6,12 9,12" fill="#fff" opacity="0.6"/>
+                        </svg>
+                        <div>
+                            <h4 style="color: #f59e0b; margin-bottom: 5px;">Step 2: 浄化する</h4>
+                            <p style="font-size: 12px; opacity: 0.8;">神聖な炎でわるいこを星屑に変換</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 矢印 -->
+                    <div style="color: #ec4899; font-size: 20px;">↓</div>
+                    
+                    <!-- ステップ3: 完了 -->
+                    <div style="display: flex; align-items: center; gap: 15px; background: rgba(236, 72, 153, 0.1); padding: 15px; border-radius: 8px; width: 100%; max-width: 400px;">
+                        <svg width="30" height="30" viewBox="0 0 50 50">
+                            <polygon points="25,20 28,14 34,14 29,10 31,4 25,7 19,4 21,10 16,14 22,14" fill="#ec4899" opacity="0.8">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                            </polygon>
+                            <circle cx="15" cy="25" r="1.5" fill="#f59e0b" opacity="0.7">
+                                <animate attributeName="opacity" values="0.3;0.9;0.3" dur="1.8s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="35" cy="30" r="1" fill="#a855f7" opacity="0.8">
+                                <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.2s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        <div>
+                            <h4 style="color: #ec4899; margin-bottom: 5px;">Step 3: 心スッキリ</h4>
+                            <p style="font-size: 12px; opacity: 0.8;">わるいこが美しい星に生まれ変わりました</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="color: #ec4899; margin: 30px 0 15px;">浄化アイコンの詳細解説</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #f59e0b; margin-bottom: 8px;">🔥 神聖な炎</h4>
+                    <p style="font-size: 12px; opacity: 0.8;">グラデーションの炎が揺らめき、浄化のエネルギーを表現。内側の白い炎で神聖さを演出</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #f59e0b; margin-bottom: 8px;">⭕ エネルギー円環</h4>
+                    <p style="font-size: 12px; opacity: 0.8;">回転する二重の円環で浄化エネルギーの流れを可視化。儀式的な神秘性を表現</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #f59e0b; margin-bottom: 8px;">✨ 星屑の舞</h4>
+                    <p style="font-size: 12px; opacity: 0.8;">浄化と共に生まれる星屑が舞い上がり、わるいこの変化を美しく表現</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <h4 style="color: #f59e0b; margin-bottom: 8px;">👾 変容プロセス</h4>
+                    <p style="font-size: 12px; opacity: 0.8;">わるいこが徐々に小さくなって消える様子で、浄化の完了を示唆</p>
+                </div>
+            </div>
+            
+            <h3 style="color: #ec4899; margin: 30px 0 15px;">実際のアプリへの組み込み例</h3>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; margin: 20px 0;">
+                <div style="display: flex; justify-content: space-around; align-items: center; background: rgba(3, 0, 20, 0.8); padding: 15px; border-radius: 8px;">
+                    <!-- 実際のナビゲーション例 -->
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; color: #f59e0b;">
+                        <svg width="24" height="24" viewBox="0 0 40 40" style="filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));">
+                            <rect x="8" y="15" width="3" height="20" fill="#a855f7" opacity="0.8"/>
+                            <rect x="14" y="12" width="3" height="23" fill="#ec4899"/>
+                            <rect x="20" y="10" width="3" height="25" fill="#f59e0b"/>
+                            <rect x="26" y="12" width="3" height="23" fill="#ec4899"/>
+                            <rect x="32" y="15" width="3" height="20" fill="#a855f7" opacity="0.8"/>
+                            <polygon points="5,15 20,5 35,15" fill="url(#templeGrad)" opacity="0.9"/>
+                            <rect x="6" y="35" width="28" height="3" fill="url(#templeGrad)" opacity="0.7"/>
+                            <circle cx="20" cy="25" r="2" fill="#fff" opacity="0.8">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        <span style="font-size: 11px;">神殿</span>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.6;">
+                        <svg width="24" height="24" viewBox="0 0 40 40">
+                            <circle cx="20" cy="20" r="12" fill="url(#crystalGrad)" stroke="#a855f7" stroke-width="1" opacity="0.7"/>
+                            <polygon points="20,14 21,17 24,17 21.5,19 22.5,22 20,20 17.5,22 18.5,19 16,17 19,17" fill="#f59e0b" opacity="0.6"/>
+                            <ellipse cx="17" cy="16" rx="3" ry="2" fill="#fff" opacity="0.3"/>
+                        </svg>
+                        <span style="font-size: 11px;">占い</span>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.6;">
+                        <svg width="24" height="24" viewBox="0 0 40 40">
+                            <ellipse cx="20" cy="25" rx="13" ry="10" fill="url(#monsterGrad)" opacity="0.7"/>
+                            <circle cx="16" cy="22" r="2" fill="#1f2937"/>
+                            <circle cx="24" cy="22" r="2" fill="#1f2937"/>
+                            <path d="M 15 28 Q 20 32 25 28" stroke="#1f2937" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span style="font-size: 11px;">わるいこ</span>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: 0.6;">
+                        <svg width="24" height="24" viewBox="0 0 40 40">
+                            <path d="M 8,12 L 15,8 L 25,15 L 32,10 L 30,20 L 20,25 L 10,22 Z" stroke="#a855f7" stroke-width="1.5" fill="none" opacity="0.4"/>
+                            <polygon points="15,8 16,6 18,6 16.5,4.5 17,2 15,3.5 13,2 13.5,4.5 12,6 14,6" fill="#f59e0b" opacity="0.7"/>
+                            <polygon points="25,15 26,13 28,13 26.5,11.5 27,9 25,10.5 23,9 23.5,11.5 22,13 24,13" fill="#f59e0b" opacity="0.8"/>
+                        </svg>
+                        <span style="font-size: 11px;">記録</span>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 15px; font-size: 12px; opacity: 0.7;">
+                    アクティブ状態（神殿）では光るエフェクト、非アクティブ状態では控えめな表示
+                </p>
+            </div>
+        </div>
+        
+        <!-- アプリアイコン -->
+        <div class="implementation-section">
+            <h2>アプリアイコン（ホーム画面用）</h2>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin: 30px 0; flex-wrap: wrap;">
+                <!-- 64px版 -->
+                <div style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, #1a0f3d, #0d0621); border-radius: 12px; padding: 8px; display: inline-block; box-shadow: 0 8px 25px rgba(0,0,0,0.5);">
+                        <svg width="64" height="64" viewBox="0 0 64 64">
+                            <defs>
+                                <radialGradient id="appBg" cx="50%" cy="30%">
+                                    <stop offset="0%" style="stop-color:#2d1b69"/>
+                                    <stop offset="70%" style="stop-color:#1a0f3d"/>
+                                    <stop offset="100%" style="stop-color:#0d0621"/>
+                                </radialGradient>
+                                <linearGradient id="appStar" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f59e0b"/>
+                                    <stop offset="50%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#a855f7"/>
+                                </linearGradient>
+                            </defs>
+                            <!-- 背景 -->
+                            <rect width="64" height="64" rx="12" fill="url(#appBg)"/>
+                            <!-- 星座の線 -->
+                            <path d="M 12,20 L 25,15 L 40,25 L 52,18 L 48,35 L 32,45 L 16,40 Z" 
+                                  stroke="url(#appStar)" stroke-width="1" fill="none" opacity="0.3"/>
+                            <!-- メインの星 -->
+                            <polygon points="32,32 35,26 41,26 36,22 38,16 32,19 26,16 28,22 23,26 29,26" 
+                                     fill="url(#appStar)" opacity="0.9">
+                                <animateTransform attributeName="transform" type="rotate" values="0 32 32;360 32 32" dur="20s" repeatCount="indefinite"/>
+                            </polygon>
+                            <!-- 小さな星々 -->
+                            <circle cx="20" cy="25" r="1.5" fill="#f59e0b" opacity="0.8">
+                                <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="45" cy="30" r="1" fill="#ec4899" opacity="0.7">
+                                <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="25" cy="45" r="1.2" fill="#a855f7" opacity="0.6">
+                                <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.8s" repeatCount="indefinite"/>
+                            </circle>
+                            <!-- わるいこのシルエット -->
+                            <ellipse cx="48" cy="48" rx="6" ry="4" fill="url(#monsterGrad)" opacity="0.4">
+                                <animateTransform attributeName="transform" type="scale" values="1;1.1;1" dur="3s" repeatCount="indefinite"/>
+                            </ellipse>
+                        </svg>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 12px;">64px (標準)</p>
+                </div>
+                
+                <!-- 48px版 -->
+                <div style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, #1a0f3d, #0d0621); border-radius: 9px; padding: 6px; display: inline-block; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
+                        <svg width="48" height="48" viewBox="0 0 64 64">
+                            <rect width="64" height="64" rx="12" fill="url(#appBg)"/>
+                            <path d="M 12,20 L 25,15 L 40,25 L 52,18 L 48,35 L 32,45 L 16,40 Z" 
+                                  stroke="url(#appStar)" stroke-width="1" fill="none" opacity="0.3"/>
+                            <polygon points="32,32 35,26 41,26 36,22 38,16 32,19 26,16 28,22 23,26 29,26" 
+                                     fill="url(#appStar)" opacity="0.9"/>
+                            <circle cx="20" cy="25" r="1.5" fill="#f59e0b" opacity="0.8"/>
+                            <circle cx="45" cy="30" r="1" fill="#ec4899" opacity="0.7"/>
+                            <ellipse cx="48" cy="48" rx="6" ry="4" fill="url(#monsterGrad)" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 12px;">48px (小)</p>
+                </div>
+                
+                <!-- 32px版 -->
+                <div style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, #1a0f3d, #0d0621); border-radius: 6px; padding: 4px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                        <svg width="32" height="32" viewBox="0 0 64 64">
+                            <rect width="64" height="64" rx="12" fill="url(#appBg)"/>
+                            <polygon points="32,32 35,26 41,26 36,22 38,16 32,19 26,16 28,22 23,26 29,26" 
+                                     fill="url(#appStar)" opacity="0.9"/>
+                            <circle cx="20" cy="25" r="2" fill="#f59e0b" opacity="0.6"/>
+                            <circle cx="45" cy="40" r="1.5" fill="#ec4899" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 12px;">32px (極小)</p>
+                </div>
+            </div>
+            
+            <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 8px; margin-top: 20px;">
+                <h4 style="color: #f59e0b; margin-bottom: 15px;">アプリアイコンの特徴</h4>
+                <ul style="margin-left: 20px; line-height: 1.8; font-size: 14px;">
+                    <li><strong>視認性重視</strong>: 小さなサイズでも「裏星」とわかるデザイン</li>
+                    <li><strong>ブランドカラー</strong>: 紫系のグラデーション背景で神秘的な印象</li>
+                    <li><strong>シンボル統合</strong>: メインの星とわるいこのシルエットで機能を表現</li>
+                    <li><strong>アニメーション</strong>: 大きなサイズでは微細な動きで生きた印象</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

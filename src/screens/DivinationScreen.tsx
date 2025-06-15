@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,18 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
-  SafeAreaView,
+  ScrollView,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DivinationIcon, BackIcon } from '../components/Icons';
+import { drawRandomCard, generateDailyReading, TarotCard } from '../data/tarotCards';
+import {
+  hasPerformedTodaysDivination,
+  saveDivinationResult,
+  getTodaysDivination,
+  DivinationResult,
+} from '../utils/divinationStorage';
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,167 +26,250 @@ interface DivinationScreenProps {
 }
 
 const DivinationScreen: React.FC<DivinationScreenProps> = ({ navigation }) => {
-  const [stars] = useState(() => 
-    Array.from({ length: 15 }, (_, i) => ({
-      id: i,
-      left: Math.random() * width,
-      top: Math.random() * height * 0.7,
-      opacity: new Animated.Value(Math.random()),
-      size: Math.random() * 3 + 1,
-    }))
-  );
+  const [currentResult, setCurrentResult] = useState<DivinationResult | null>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [hasDrawnToday, setHasDrawnToday] = useState(false);
+  const [showResult, setShowResult] = useState(false);
 
-  const [crystalScale] = useState(new Animated.Value(1));
-  const [crystalRotation] = useState(new Animated.Value(0));
+  // アニメーション値
+  const cardScale = useRef(new Animated.Value(1)).current;
+  const cardRotation = useRef(new Animated.Value(0)).current;
+  const resultOpacity = useRef(new Animated.Value(0)).current;
+  const resultTranslateY = useRef(new Animated.Value(50)).current;
 
   useEffect(() => {
-    // 星のきらめきアニメーション
-    stars.forEach((star, index) => {
-      const animate = () => {
-        Animated.sequence([
-          Animated.timing(star.opacity, {
-            toValue: Math.random() * 0.8 + 0.2,
-            duration: 1000 + Math.random() * 2000,
-            useNativeDriver: true,
-          }),
-          Animated.timing(star.opacity, {
-            toValue: Math.random() * 0.3 + 0.1,
-            duration: 1000 + Math.random() * 2000,
-            useNativeDriver: true,
-          }),
-        ]).start(() => animate());
-      };
-      setTimeout(() => animate(), index * 200);
-    });
-
-    // 水晶球のアニメーション
-    const crystalAnimation = () => {
-      Animated.parallel([
-        Animated.sequence([
-          Animated.timing(crystalScale, {
-            toValue: 1.1,
-            duration: 2000,
-            useNativeDriver: true,
-          }),
-          Animated.timing(crystalScale, {
-            toValue: 1,
-            duration: 2000,
-            useNativeDriver: true,
-          }),
-        ]),
-        Animated.timing(crystalRotation, {
-          toValue: 1,
-          duration: 8000,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        crystalRotation.setValue(0);
-        crystalAnimation();
-      });
-    };
-    crystalAnimation();
+    checkTodaysStatus();
   }, []);
 
-  const handleDivination = () => {
-    // TODO: 占い機能の実装
-    console.log('占いを開始');
+  const checkTodaysStatus = async () => {
+    try {
+      const hasDrawn = await hasPerformedTodaysDivination();
+      setHasDrawnToday(hasDrawn);
+
+      if (hasDrawn) {
+        const todaysResult = await getTodaysDivination();
+        if (todaysResult) {
+          setCurrentResult(todaysResult);
+          setShowResult(true);
+          // 結果表示アニメーション
+          Animated.parallel([
+            Animated.timing(resultOpacity, {
+              toValue: 1,
+              duration: 800,
+              useNativeDriver: true,
+            }),
+            Animated.timing(resultTranslateY, {
+              toValue: 0,
+              duration: 800,
+              useNativeDriver: true,
+            }),
+          ]).start();
+        }
+      }
+    } catch (error) {
+      console.error('Error checking today\'s status:', error);
+    }
   };
 
+  const handleDrawCard = async () => {
+    if (hasDrawnToday) {
+      Alert.alert(
+        '今日の占いは完了しています',
+        '1日1回の占いは既に実行済みです。明日また新しいカードを引いてください。',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    setIsDrawing(true);
+
+    // カード引きアニメーション
+    Animated.sequence([
+      // カードが回転しながら縮小
+      Animated.parallel([
+        Animated.timing(cardScale, {
+          toValue: 0.8,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(cardRotation, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+      // カードが元のサイズに戻る
+      Animated.timing(cardScale, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(async () => {
+      // カードを引く
+      const { card, isReversed } = drawRandomCard();
+      const reading = generateDailyReading(card, isReversed);
+      
+      const result: DivinationResult = {
+        id: Date.now().toString(),
+        card,
+        isReversed,
+        reading,
+        date: new Date().toLocaleDateString('ja-JP'),
+        timestamp: Date.now(),
+      };
+
+      try {
+        await saveDivinationResult(result);
+        setCurrentResult(result);
+        setHasDrawnToday(true);
+        setShowResult(true);
+        setIsDrawing(false);
+
+        // 結果表示アニメーション
+        Animated.parallel([
+          Animated.timing(resultOpacity, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(resultTranslateY, {
+            toValue: 0,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ]).start();
+      } catch (error) {
+        console.error('Error saving divination result:', error);
+        setIsDrawing(false);
+        Alert.alert('エラー', '占い結果の保存に失敗しました。');
+      }
+    });
+  };
+
+  const cardRotateInterpolated = cardRotation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={['#1a0f3d', '#2d1b69', '#4c1d95', '#0f0f23']}
-        locations={[0, 0.3, 0.7, 1]}
-        style={styles.background}
-      >
-        {/* 星々 */}
-        {stars.map((star) => (
+    <LinearGradient
+      colors={['#1a0f3d', '#2d1b69', '#4c1d95']}
+      style={styles.container}
+    >
+      {/* ヘッダー */}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <BackIcon size={24} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>今日の占い</Text>
+        <View style={styles.placeholder} />
+      </View>
+
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* タイトル */}
+        <View style={styles.titleContainer}>
+          <DivinationIcon size={60} style={styles.titleIcon} />
+          <Text style={styles.title}>タロット占い</Text>
+          <Text style={styles.subtitle}>
+            {hasDrawnToday ? '今日のあなたのカード' : '今日のカードを引いてみましょう'}
+          </Text>
+        </View>
+
+        {/* カード表示エリア */}
+        <View style={styles.cardContainer}>
           <Animated.View
-            key={star.id}
             style={[
-              styles.star,
+              styles.card,
               {
-                left: star.left,
-                top: star.top,
-                opacity: star.opacity,
-                width: star.size,
-                height: star.size,
+                transform: [
+                  { scale: cardScale },
+                  { rotate: cardRotateInterpolated },
+                ],
               },
             ]}
-          />
-        ))}
-
-        {/* ヘッダー */}
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <BackIcon size={24} />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>神秘の占い</Text>
-          <View style={styles.placeholder} />
-        </View>
-
-        {/* メインコンテンツ */}
-        <View style={styles.content}>
-          <View style={styles.crystalContainer}>
-            <Animated.View
-              style={[
-                styles.crystalWrapper,
-                {
-                  transform: [
-                    { scale: crystalScale },
-                    {
-                      rotate: crystalRotation.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ['0deg', '360deg'],
-                      }),
-                    },
-                  ],
-                },
-              ]}
-            >
-              <DivinationIcon size={120} />
-            </Animated.View>
-          </View>
-
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>運命の扉を開きましょう</Text>
-            <Text style={styles.subtitle}>
-              宇宙の神秘があなたの未来を照らします
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.divinationButton}
-            onPress={handleDivination}
-            activeOpacity={0.8}
           >
             <LinearGradient
-              colors={['#a855f7', '#ec4899', '#f59e0b']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.buttonGradient}
+              colors={['#6366f1', '#8b5cf6', '#a855f7']}
+              style={styles.cardGradient}
             >
-              <Text style={styles.buttonText}>占いを始める</Text>
+              {showResult && currentResult ? (
+                <View style={styles.cardContent}>
+                  <Text style={styles.cardName}>{currentResult.card.name}</Text>
+                  <Text style={styles.cardPosition}>
+                    {currentResult.isReversed ? '逆位置' : '正位置'}
+                  </Text>
+                  <View style={styles.cardKeywords}>
+                    {currentResult.card.keywords.map((keyword, index) => (
+                      <Text key={index} style={styles.keyword}>
+                        {keyword}
+                      </Text>
+                    ))}
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.cardBack}>
+                  <DivinationIcon size={80} />
+                  <Text style={styles.cardBackText}>
+                    {isDrawing ? '運命を読み取り中...' : 'タップしてカードを引く'}
+                  </Text>
+                </View>
+              )}
+            </LinearGradient>
+          </Animated.View>
+        </View>
+
+        {/* カード引きボタン */}
+        {!hasDrawnToday && (
+          <TouchableOpacity
+            style={[styles.drawButton, isDrawing && styles.drawButtonDisabled]}
+            onPress={handleDrawCard}
+            disabled={isDrawing}
+          >
+            <LinearGradient
+              colors={['#f59e0b', '#ec4899', '#a855f7']}
+              style={styles.drawButtonGradient}
+            >
+              <Text style={styles.drawButtonText}>
+                {isDrawing ? 'カードを引いています...' : 'カードを引く'}
+              </Text>
             </LinearGradient>
           </TouchableOpacity>
+        )}
 
-          <View style={styles.optionsContainer}>
-            <TouchableOpacity style={styles.optionButton}>
-              <Text style={styles.optionText}>今日の運勢</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButton}>
-              <Text style={styles.optionText}>恋愛運</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.optionButton}>
-              <Text style={styles.optionText}>仕事運</Text>
-            </TouchableOpacity>
+        {/* 占い結果 */}
+        {showResult && currentResult && (
+          <Animated.View
+            style={[
+              styles.resultContainer,
+              {
+                opacity: resultOpacity,
+                transform: [{ translateY: resultTranslateY }],
+              },
+            ]}
+          >
+            <View style={styles.resultCard}>
+              <Text style={styles.resultTitle}>今日のメッセージ</Text>
+              <Text style={styles.resultText}>{currentResult.reading}</Text>
+              <View style={styles.resultFooter}>
+                <Text style={styles.resultDate}>{currentResult.date}</Text>
+              </View>
+            </View>
+          </Animated.View>
+        )}
+
+        {/* 再占いの説明 */}
+        {hasDrawnToday && (
+          <View style={styles.infoContainer}>
+            <Text style={styles.infoText}>
+              占いは1日1回です。明日の午前4時以降に新しいカードを引くことができます。
+            </Text>
           </View>
-        </View>
-      </LinearGradient>
-    </SafeAreaView>
+        )}
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
@@ -186,113 +277,173 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  background: {
-    flex: 1,
-  },
-  star: {
-    position: 'absolute',
-    backgroundColor: '#fff',
-    borderRadius: 50,
-  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingTop: 50,
     paddingHorizontal: 20,
-    paddingTop: 10,
     paddingBottom: 20,
   },
   backButton: {
-    padding: 10,
-    borderRadius: 20,
-    backgroundColor: 'rgba(168, 85, 247, 0.2)',
+    padding: 8,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#E0E1DD',
-    textAlign: 'center',
-    letterSpacing: 1,
+    color: '#fff',
   },
   placeholder: {
-    width: 44,
+    width: 40,
   },
   content: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
-  crystalContainer: {
+  titleContainer: {
+    alignItems: 'center',
     marginBottom: 40,
   },
-  crystalWrapper: {
-    shadowColor: '#a855f7',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 20,
-    elevation: 20,
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginBottom: 50,
+  titleIcon: {
+    marginBottom: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#E0E1DD',
-    textAlign: 'center',
-    marginBottom: 10,
-    letterSpacing: 1,
+    color: '#fff',
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#a855f7',
+    color: '#d1d5db',
     textAlign: 'center',
-    opacity: 0.8,
-    lineHeight: 24,
   },
-  divinationButton: {
-    width: width * 0.7,
-    height: 60,
-    borderRadius: 30,
+  cardContainer: {
+    alignItems: 'center',
     marginBottom: 40,
-    shadowColor: '#ec4899',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.6,
-    shadowRadius: 15,
-    elevation: 15,
   },
-  buttonGradient: {
+  card: {
+    width: width * 0.7,
+    height: width * 0.9,
+    borderRadius: 20,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+  },
+  cardGradient: {
     flex: 1,
-    borderRadius: 30,
+    borderRadius: 20,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardContent: {
+    alignItems: 'center',
+  },
+  cardName: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  cardPosition: {
+    fontSize: 18,
+    color: '#fbbf24',
+    marginBottom: 20,
+  },
+  cardKeywords: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  keyword: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    fontSize: 14,
+    color: '#fff',
+  },
+  cardBack: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText: {
+  cardBackText: {
+    fontSize: 16,
+    color: '#fff',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  drawButton: {
+    marginBottom: 30,
+    borderRadius: 25,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+  },
+  drawButtonDisabled: {
+    opacity: 0.6,
+  },
+  drawButtonGradient: {
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+    alignItems: 'center',
+  },
+  drawButtonText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
-    letterSpacing: 1,
   },
-  optionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingHorizontal: 20,
+  resultContainer: {
+    marginBottom: 30,
   },
-  optionButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    backgroundColor: 'rgba(168, 85, 247, 0.2)',
+  resultCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 16,
+    padding: 20,
     borderWidth: 1,
-    borderColor: 'rgba(168, 85, 247, 0.4)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
-  optionText: {
-    color: '#a855f7',
+  resultTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fbbf24',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  resultText: {
+    fontSize: 16,
+    color: '#fff',
+    lineHeight: 24,
+    marginBottom: 16,
+  },
+  resultFooter: {
+    alignItems: 'center',
+  },
+  resultDate: {
     fontSize: 14,
-    fontWeight: '600',
+    color: '#9ca3af',
+  },
+  infoContainer: {
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 30,
+    borderWidth: 1,
+    borderColor: 'rgba(59, 130, 246, 0.3)',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#93c5fd',
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });
 

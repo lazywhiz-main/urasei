@@ -107,18 +107,15 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
   }, []);
 
   const handleWriteNote = () => {
-    // TODO: わるいこノート記録機能の実装
-    console.log('わるいこノートを書く');
+    navigation.navigate('WriteNote');
   };
 
   const handleViewRecords = () => {
-    // TODO: 記録閲覧機能の実装
-    console.log('記録を見る');
+    navigation.navigate('NotesHistory');
   };
 
   const handlePurification = () => {
-    // TODO: 浄化機能の実装
-    console.log('浄化を開始');
+    navigation.navigate('Purification');
   };
 
   return (
