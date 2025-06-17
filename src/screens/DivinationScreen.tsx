@@ -19,6 +19,8 @@ import {
   getTodaysDivination,
   DivinationResult,
 } from '../utils/divinationStorage';
+import { StarNavContainer } from '../components/StarNavContainer';
+import { StarBackground } from '../components/StarBackground';
 
 const { width, height } = Dimensions.get('window');
 
@@ -153,111 +155,115 @@ const DivinationScreen: React.FC<DivinationScreenProps> = ({ navigation }) => {
   });
 
   return (
-    <LinearGradient
-      colors={['#1a0f3d', '#2d1b69', '#4c1d95']}
-      style={styles.container}
-    >
-      {/* ヘッダー */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <BackIcon size={24} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>今日の占い</Text>
-        <View style={styles.placeholder} />
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* タイトル */}
-        <View style={styles.titleContainer}>
-          <DivinationIcon size={60} style={styles.titleIcon} />
-          <Text style={styles.title}>タロット占い</Text>
-          <Text style={styles.subtitle}>
-            {hasDrawnToday ? '今日のあなたのカード' : '今日のカードを引いてみましょう'}
-          </Text>
-        </View>
-
-        {/* カード表示エリア */}
-        <View style={styles.cardContainer}>
-          <Animated.View
-            style={[
-              {
-                transform: [
-                  { scale: cardScale },
-                  { rotate: cardRotateInterpolated },
-                ],
-              },
-            ]}
-          >
-            {showResult && currentResult ? (
-              <TarotCardComponent
-                card={currentResult.card}
-                isReversed={currentResult.isReversed}
-                width={width * 0.7}
-                height={width * 0.9}
-              />
-            ) : (
-              <TarotCardComponent
-                card={{ id: 0, name: '', meaning: '', reversedMeaning: '', description: '', keywords: [] }}
-                showBack={true}
-                width={width * 0.7}
-                height={width * 0.9}
-              />
-            )}
-          </Animated.View>
-        </View>
-
-        {/* カード引きボタン */}
-        {!hasDrawnToday && (
+    <View style={styles.container}>
+      <StarBackground variant="divination">
+        {/* StarNavContainer追加 */}
+        <StarNavContainer 
+          currentStar="divination"
+        />
+        
+        {/* ヘッダー */}
+        <View style={styles.header}>
           <TouchableOpacity
-            style={[styles.drawButton, isDrawing && styles.drawButtonDisabled]}
-            onPress={handleDrawCard}
-            disabled={isDrawing}
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
           >
-            <LinearGradient
-              colors={['#f59e0b', '#ec4899', '#a855f7']}
-              style={styles.drawButtonGradient}
-            >
-              <Text style={styles.drawButtonText}>
-                {isDrawing ? 'カードを引いています...' : 'カードを引く'}
-              </Text>
-            </LinearGradient>
+            <BackIcon size={24} />
           </TouchableOpacity>
-        )}
+          <Text style={styles.headerTitle}>今日の占い</Text>
+          <View style={styles.placeholder} />
+        </View>
 
-        {/* 占い結果 */}
-        {showResult && currentResult && (
-          <Animated.View
-            style={[
-              styles.resultContainer,
-              {
-                opacity: resultOpacity,
-                transform: [{ translateY: resultTranslateY }],
-              },
-            ]}
-          >
-            <View style={styles.resultCard}>
-              <Text style={styles.resultTitle}>今日のメッセージ</Text>
-              <Text style={styles.resultText}>{currentResult.reading}</Text>
-              <View style={styles.resultFooter}>
-                <Text style={styles.resultDate}>{currentResult.date}</Text>
-              </View>
-            </View>
-          </Animated.View>
-        )}
-
-        {/* 再占いの説明 */}
-        {hasDrawnToday && (
-          <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>
-              占いは1日1回です。明日の午前4時以降に新しいカードを引くことができます。
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          {/* タイトル */}
+          <View style={styles.titleContainer}>
+            <DivinationIcon size={60} style={styles.titleIcon} />
+            <Text style={styles.title}>タロット占い</Text>
+            <Text style={styles.subtitle}>
+              {hasDrawnToday ? '今日のあなたのカード' : '今日のカードを引いてみましょう'}
             </Text>
           </View>
-        )}
-      </ScrollView>
-    </LinearGradient>
+
+          {/* カード表示エリア */}
+          <View style={styles.cardContainer}>
+            <Animated.View
+              style={[
+                {
+                  transform: [
+                    { scale: cardScale },
+                    { rotate: cardRotateInterpolated },
+                  ],
+                },
+              ]}
+            >
+              {showResult && currentResult ? (
+                <TarotCardComponent
+                  card={currentResult.card}
+                  isReversed={currentResult.isReversed}
+                  width={width * 0.7}
+                  height={width * 0.9}
+                />
+              ) : (
+                <TarotCardComponent
+                  card={{ id: 0, name: '', meaning: '', reversedMeaning: '', description: '', keywords: [] }}
+                  showBack={true}
+                  width={width * 0.7}
+                  height={width * 0.9}
+                />
+              )}
+            </Animated.View>
+          </View>
+
+          {/* カード引きボタン */}
+          {!hasDrawnToday && (
+            <TouchableOpacity
+              style={[styles.drawButton, isDrawing && styles.drawButtonDisabled]}
+              onPress={handleDrawCard}
+              disabled={isDrawing}
+            >
+              <LinearGradient
+                colors={['#f59e0b', '#ec4899', '#a855f7']}
+                style={styles.drawButtonGradient}
+              >
+                <Text style={styles.drawButtonText}>
+                  {isDrawing ? 'カードを引いています...' : 'カードを引く'}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          )}
+
+          {/* 占い結果 */}
+          {showResult && currentResult && (
+            <Animated.View
+              style={[
+                styles.resultContainer,
+                {
+                  opacity: resultOpacity,
+                  transform: [{ translateY: resultTranslateY }],
+                },
+              ]}
+            >
+              <View style={styles.resultCard}>
+                <Text style={styles.resultTitle}>今日のメッセージ</Text>
+                <Text style={styles.resultText}>{currentResult.reading}</Text>
+                <View style={styles.resultFooter}>
+                  <Text style={styles.resultDate}>{currentResult.date}</Text>
+                </View>
+              </View>
+            </Animated.View>
+          )}
+
+          {/* 再占いの説明 */}
+          {hasDrawnToday && (
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoText}>
+                占いは1日1回です。明日の午前4時以降に新しいカードを引くことができます。
+              </Text>
+            </View>
+          )}
+        </ScrollView>
+      </StarBackground>
+    </View>
   );
 };
 

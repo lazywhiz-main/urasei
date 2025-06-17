@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DivinationIcon, WaruikoIcon, RecordIcon, BackIcon } from '../components/Icons';
+import { StarNavContainer } from '../components/StarNavContainer';
 
 const { width, height } = Dimensions.get('window');
 
@@ -113,29 +114,32 @@ const StarSanctuary: React.FC<StarSanctuaryProps> = ({ navigation }) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.outerContainer}>
+      {/* 全画面背景 */}
       <LinearGradient
         colors={['#0a0a0a', '#1a0f3d', '#2d1b69', '#0f0f23']}
         locations={[0, 0.3, 0.6, 1]}
-        style={styles.background}
-      >
-        {/* 星々の背景 */}
-        {stars.map((star) => (
-          <Animated.View
-            key={star.id}
-            style={[
-              styles.star,
-              {
-                left: star.left,
-                top: star.top,
-                opacity: star.opacity,
-                width: star.size,
-                height: star.size,
-              },
-            ]}
-          />
-        ))}
+        style={styles.fullScreenBackground}
+      />
+      
+      {/* 星々の背景 */}
+      {stars.map((star) => (
+        <Animated.View
+          key={star.id}
+          style={[
+            styles.star,
+            {
+              left: star.left,
+              top: star.top,
+              opacity: star.opacity,
+              width: star.size,
+              height: star.size,
+            },
+          ]}
+        />
+      ))}
 
+      <SafeAreaView style={styles.container}>
         {/* ヘッダー */}
         <View style={styles.header}>
           <TouchableOpacity
@@ -246,17 +250,29 @@ const StarSanctuary: React.FC<StarSanctuaryProps> = ({ navigation }) => {
           <Text style={styles.infoText}>✨ 宇宙の神秘が満ちています</Text>
           <Text style={styles.infoText}>🌟 導かれたい星を選んでください</Text>
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+
+        {/* StarNavContainer追加 */}
+        <StarNavContainer 
+          currentStar="sanctuary"
+        />
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
-  background: {
-    flex: 1,
+  fullScreenBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   star: {
     position: 'absolute',

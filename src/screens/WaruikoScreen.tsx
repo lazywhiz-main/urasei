@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { WaruikoIcon, BackIcon, RecordIcon } from '../components/Icons';
+import { StarNavContainer } from '../components/StarNavContainer';
 
 const { width, height } = Dimensions.get('window');
 
@@ -119,45 +120,52 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.outerContainer}>
+      {/* 全画面背景 */}
       <LinearGradient
         colors={['#0f0f23', '#1a0f3d', '#2d1b69', '#1a0f3d']}
         locations={[0, 0.3, 0.7, 1]}
-        style={styles.background}
-      >
-        {/* 星々 */}
-        {stars.map((star) => (
-          <Animated.View
-            key={star.id}
-            style={[
-              styles.star,
-              {
-                left: star.left,
-                top: star.top,
-                opacity: star.opacity,
-                width: star.size,
-                height: star.size,
-              },
-            ]}
-          />
-        ))}
+        style={styles.fullScreenBackground}
+      />
+      
+      {/* 星々 */}
+      {stars.map((star) => (
+        <Animated.View
+          key={star.id}
+          style={[
+            styles.star,
+            {
+              left: star.left,
+              top: star.top,
+              opacity: star.opacity,
+              width: star.size,
+              height: star.size,
+            },
+          ]}
+        />
+      ))}
 
-        {/* パーティクル */}
-        {particles.map((particle, index) => (
-          <Animated.View
-            key={particle.id}
-            style={[
-              styles.particle,
-              {
-                left: width * 0.2 + (index % 3) * (width * 0.2),
-                top: height * 0.4 + Math.floor(index / 3) * 100,
-                transform: [{ translateY: particle.translateY }],
-                opacity: particle.opacity,
-              },
-            ]}
-          />
-        ))}
+      {/* パーティクル */}
+      {particles.map((particle, index) => (
+        <Animated.View
+          key={particle.id}
+          style={[
+            styles.particle,
+            {
+              left: width * 0.2 + (index % 3) * (width * 0.2),
+              top: height * 0.4 + Math.floor(index / 3) * 100,
+              transform: [{ translateY: particle.translateY }],
+              opacity: particle.opacity,
+            },
+          ]}
+        />
+      ))}
 
+      <SafeAreaView style={styles.container}>
+        <StarNavContainer 
+          currentStar="waruiko"
+        />
+        
         {/* ヘッダー */}
         <View style={styles.header}>
           <TouchableOpacity
@@ -192,6 +200,9 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
                 わるいこたちが優しく受け止めて{'\n'}
                 浄化のお手伝いをします
               </Text>
+              <Text style={styles.quickAccess}>
+                ✨ 今日の気持ちをすぐに書き留めよう
+              </Text>
             </View>
 
             <View style={styles.actionsContainer}>
@@ -201,9 +212,7 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
                 activeOpacity={0.8}
               >
                 <LinearGradient
-                  colors={['#9333ea', '#3b82f6', '#a855f7']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
+                  colors={['#3b82f6', '#1d4ed8', '#6366f1']}
                   style={styles.buttonGradient}
                 >
                   <Text style={styles.primaryButtonText}>今日の気持ちを書く</Text>
@@ -214,7 +223,7 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
                 <TouchableOpacity
                   style={styles.secondaryButton}
                   onPress={handleViewRecords}
-                  activeOpacity={0.8}
+                  activeOpacity={0.7}
                 >
                   <RecordIcon size={24} />
                   <Text style={styles.secondaryButtonText}>記録を見る</Text>
@@ -223,7 +232,7 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
                 <TouchableOpacity
                   style={styles.secondaryButton}
                   onPress={handlePurification}
-                  activeOpacity={0.8}
+                  activeOpacity={0.7}
                 >
                   <View style={styles.purificationIcon}>
                     <Text style={styles.purificationEmoji}>✨</Text>
@@ -246,16 +255,23 @@ const WaruikoScreen: React.FC<WaruikoScreenProps> = ({ navigation }) => {
             </View>
           </View>
         </ScrollView>
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
   },
-  background: {
+  fullScreenBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  container: {
     flex: 1,
   },
   star: {
@@ -330,6 +346,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.8,
     lineHeight: 24,
+  },
+  quickAccess: {
+    fontSize: 14,
+    color: '#ec4899',
+    textAlign: 'center',
+    marginTop: 15,
+    fontStyle: 'italic',
+    opacity: 0.9,
   },
   actionsContainer: {
     width: '100%',

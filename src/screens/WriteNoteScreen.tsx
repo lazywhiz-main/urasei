@@ -226,198 +226,183 @@ const WriteNoteScreen: React.FC<WriteNoteScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+    <View style={styles.outerContainer}>
+      {/* 全画面背景 */}
+      <LinearGradient
+        colors={['#0f0f23', '#1a0f3d', '#2d1b69', '#1a0f3d']}
+        locations={[0, 0.3, 0.7, 1]}
+        style={styles.fullScreenBackground}
+      />
+      
+      {/* 星々 */}
+      {stars.map((star) => (
+        <Animated.View
+          key={star.id}
+          style={[
+            styles.star,
+            {
+              left: star.left,
+              top: star.top,
+              opacity: star.opacity,
+              width: star.size,
+              height: star.size,
+            },
+          ]}
+        />
+      ))}
+
       <SafeAreaView style={styles.container}>
-        <LinearGradient
-          colors={['#1a0f3d', '#0d0621', '#030014']}
-          style={styles.gradient}
-        >
-          {/* 星々の背景 */}
-          {stars.map((star) => (
-            <Animated.View
-              key={star.id}
-              style={[
-                styles.star,
-                {
-                  left: star.left,
-                  top: star.top,
-                  width: star.size,
-                  height: star.size,
-                  opacity: star.opacity,
-                },
-              ]}
-            />
-          ))}
-
-          {/* ヘッダー */}
-          <View style={styles.header}>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-            >
-              <BackIcon size={24} />
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>今日の気持ちを書く</Text>
-            <View style={styles.placeholder} />
-          </View>
-
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.content}
+        {/* ヘッダー */}
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
           >
-            {!showMonsterResponse ? (
-              <>
-                {/* わるいこ */}
-                <View style={styles.monsterContainer}>
-                  <Animated.View
-                    style={[
-                      styles.monster,
-                      {
-                        transform: [{ scale: monsterScale }],
-                      },
-                    ]}
-                  >
-                    <WaruikoIcon size={120} />
-                  </Animated.View>
-                  
-                  {/* 思考バブル */}
-                  <View style={styles.thoughtBubble}>
-                    <Text style={styles.thoughtText}>
-                      今日はどんな気持ち？{'\n'}
-                      何でも聞かせて...
-                    </Text>
-                  </View>
-                </View>
+            <BackIcon size={24} />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>今日の気持ちを書く</Text>
+          <View style={styles.placeholder} />
+        </View>
 
-                {/* テキスト入力 */}
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.textInput}
-                    multiline
-                    placeholder="今日の気持ちを書いてください..."
-                    placeholderTextColor="rgba(224, 225, 221, 0.5)"
-                    value={noteText}
-                    onChangeText={setNoteText}
-                    maxLength={500}
-                    textAlignVertical="top"
-                  />
-                  <Text style={styles.charCount}>
-                    {noteText.length}/500
+        <KeyboardAvoidingView 
+          style={styles.keyboardAvoid}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <TouchableWithoutFeedback onPress={dismissKeyboard}>
+            <View style={styles.content}>
+              {/* わるいこのキャラクター */}
+              <View style={styles.monsterContainer}>
+                <Animated.View
+                  style={[
+                    styles.monsterWrapper,
+                    {
+                      transform: [{ scale: monsterScale }],
+                    },
+                  ]}
+                >
+                  <WaruikoIcon size={80} />
+                </Animated.View>
+                
+                {/* わるいこからの言葉 */}
+                <View style={styles.speechBubble}>
+                  <Text style={styles.speechText}>
+                    今日はどんな気持ち？{'\n'}
+                    何でも聞かせて...
                   </Text>
                 </View>
+              </View>
 
-                {/* 固定されたゴミ箱 */}
-                <View style={styles.depositContainer}>
-                  <View style={styles.depositBoxLid} />
-                  <View style={styles.depositBoxBody}>
-                    <View style={styles.depositSlot} />
-                  </View>
-                </View>
+              {/* テキスト入力エリア */}
+              <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder="今日の気持ちを書いてください..."
+                  placeholderTextColor="rgba(224, 225, 221, 0.5)"
+                  value={noteText}
+                  onChangeText={setNoteText}
+                  multiline
+                  maxLength={500}
+                  textAlignVertical="top"
+                />
+                <Text style={styles.charCount}>{noteText.length}/500</Text>
+              </View>
 
-                {/* 送信ボタン */}
-                <TouchableOpacity
+              {/* わるいこ預け場所のアイコン */}
+              <View style={styles.depositContainer}>
+                <Animated.View
                   style={[
-                    styles.submitButton,
-                    isSubmitting && styles.submitButtonDisabled,
+                    styles.waruikoDeposit,
+                    {
+                      transform: [
+                        { translateY: waruikoFallY },
+                      ],
+                      opacity: waruikoFallOpacity,
+                    },
                   ]}
-                  onPress={handleSubmitNote}
-                  disabled={isSubmitting}
                 >
+                  <Text style={styles.waruikoEmoji}>😈</Text>
+                </Animated.View>
+                
+                <View style={styles.depositBox}>
                   <LinearGradient
-                    colors={isSubmitting ? ['#666', '#444'] : ['#a855f7', '#ec4899']}
-                    style={styles.submitGradient}
+                    colors={['#3b82f6', '#6366f1']}
+                    style={styles.depositBoxGradient}
                   >
-                    <Text style={styles.submitButtonText}>
-                      {isSubmitting ? 'わるいこに預けています...' : 'わるいこに預ける'}
-                    </Text>
+                    <Text style={styles.depositIcon}>📦</Text>
                   </LinearGradient>
-                </TouchableOpacity>
-              </>
-            ) : (
-              /* モンスターの応答表示 */
-              <Animated.View
-                style={[
-                  styles.responseContainer,
-                  { opacity: responseOpacity },
-                ]}
-              >
-                <View style={styles.monsterContainer}>
-                  <WaruikoIcon size={100} />
                 </View>
+              </View>
 
-                <View style={styles.responseBox}>
+              {/* 送信ボタン */}
+              <TouchableOpacity
+                style={[styles.submitButton, isSubmitting && styles.submitButtonDisabled]}
+                onPress={handleSubmitNote}
+                disabled={isSubmitting}
+                activeOpacity={0.8}
+              >
+                <LinearGradient
+                  colors={isSubmitting ? ['#6b7280', '#4b5563'] : ['#ec4899', '#8b5cf6', '#3b82f6']}
+                  style={styles.submitButtonGradient}
+                >
+                  <Text style={styles.submitButtonText}>
+                    {isDepositing ? 'わるいこに預けています...' : isSubmitting ? '処理中...' : 'わるいこに預ける'}
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+
+              {/* モンスターからの応答 */}
+              {showMonsterResponse && (
+                <Animated.View
+                  style={[
+                    styles.responseContainer,
+                    {
+                      opacity: responseOpacity,
+                    },
+                  ]}
+                >
                   <Text style={styles.responseText}>{monsterResponse}</Text>
-                </View>
-
-                <TouchableOpacity
-                  style={[
-                    styles.purifyButton,
-                    isPurifying && styles.purifyButtonDisabled,
-                  ]}
-                  onPress={handlePurification}
-                  disabled={isPurifying}
-                >
-                  <LinearGradient
-                    colors={isPurifying ? ['#666', '#444'] : ['#f59e0b', '#ec4899']}
-                    style={styles.purifyGradient}
+                  
+                  {/* 浄化ボタン */}
+                  <TouchableOpacity
+                    style={styles.purificationButton}
+                    onPress={handlePurification}
+                    activeOpacity={0.8}
                   >
-                    <Text style={styles.purifyButtonText}>
-                      {isPurifying ? '浄化中...' : '浄化する'}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </Animated.View>
-            )}
-          </KeyboardAvoidingView>
-
-          {/* わるいこ落下アニメーション */}
-          {isDepositing && (
-            <View style={styles.depositAnimationContainer}>
-              {/* 落下するわるいこ */}
-              <Animated.View
-                style={[
-                  styles.fallingWaruiko,
-                  {
-                    opacity: waruikoFallOpacity,
-                    transform: [{ translateY: waruikoFallY }],
-                  },
-                ]}
-              >
-                <WaruikoIcon size={40} />
-              </Animated.View>
+                    <Animated.View
+                      style={[
+                        styles.purificationEffect,
+                        {
+                          transform: [{ scale: purificationScale }],
+                        },
+                      ]}
+                    >
+                      <PurificationIcon size={30} />
+                    </Animated.View>
+                    <Text style={styles.purificationButtonText}>心を浄化する</Text>
+                  </TouchableOpacity>
+                </Animated.View>
+              )}
             </View>
-          )}
-
-          {/* 浄化エフェクト */}
-          {isPurifying && (
-            <Animated.View
-              style={[
-                styles.purificationEffect,
-                {
-                  transform: [{ scale: purificationScale }],
-                },
-              ]}
-            >
-              <PurificationIcon size={200} />
-            </Animated.View>
-          )}
-        </LinearGradient>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </SafeAreaView>
-    </TouchableWithoutFeedback>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
+  fullScreenBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
   container: {
     flex: 1,
-  },
-  gradient: {
-    flex: 1,
-  },
-  star: {
-    position: 'absolute',
-    backgroundColor: '#fff',
-    borderRadius: 50,
   },
   header: {
     flexDirection: 'row',
@@ -442,6 +427,9 @@ const styles = StyleSheet.create({
   placeholder: {
     width: 44,
   },
+  keyboardAvoid: {
+    flex: 1,
+  },
   content: {
     flex: 1,
     alignItems: 'center',
@@ -452,14 +440,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
   },
-  monster: {
+  monsterWrapper: {
     shadowColor: '#9333ea',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 20,
     elevation: 20,
   },
-  thoughtBubble: {
+  speechBubble: {
     marginTop: 15,
     backgroundColor: 'rgba(147, 51, 234, 0.2)',
     paddingHorizontal: 15,
@@ -468,7 +456,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(147, 51, 234, 0.4)',
   },
-  thoughtText: {
+  speechText: {
     color: '#9333ea',
     fontSize: 12,
     fontWeight: '600',
@@ -507,7 +495,7 @@ const styles = StyleSheet.create({
   submitButtonDisabled: {
     shadowOpacity: 0.2,
   },
-  submitGradient: {
+  submitButtonGradient: {
     flex: 1,
     borderRadius: 25,
     alignItems: 'center',
@@ -524,22 +512,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  responseBox: {
-    backgroundColor: 'rgba(45, 27, 105, 0.4)',
-    borderRadius: 20,
-    padding: 25,
-    marginBottom: 30,
-    borderWidth: 1,
-    borderColor: 'rgba(147, 51, 234, 0.3)',
-    width: '100%',
-  },
   responseText: {
     fontSize: 16,
     color: '#E0E1DD',
     lineHeight: 24,
     textAlign: 'center',
   },
-  purifyButton: {
+  purificationButton: {
     width: '100%',
     height: 50,
     borderRadius: 25,
@@ -549,30 +528,21 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     elevation: 15,
   },
-  purifyButtonDisabled: {
-    shadowOpacity: 0.2,
-  },
-  purifyGradient: {
-    flex: 1,
-    borderRadius: 25,
+  purificationEffect: {
+    position: 'absolute',
+    top: height * 0.3,
+    left: width * 0.5 - 100,
+    width: 200,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1000,
   },
-  purifyButtonText: {
+  purificationButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
     letterSpacing: 0.5,
-  },
-  depositAnimationContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
   },
   depositContainer: {
     alignItems: 'center',
@@ -580,19 +550,14 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'center',
   },
-  depositBoxLid: {
-    width: 52,
-    height: 8,
-    backgroundColor: '#3b82f6',
-    borderRadius: 2,
-    marginBottom: 0,
-    shadowColor: '#3b82f6',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 5,
+  waruikoDeposit: {
+    position: 'absolute',
+    top: height * 0.45,
+    left: width * 0.5 - 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  depositBoxBody: {
+  depositBox: {
     width: 40,
     height: 50,
     backgroundColor: '#9333ea',
@@ -606,29 +571,24 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
-  depositSlot: {
-    width: 20,
-    height: 4,
-    backgroundColor: '#1a0f3d',
-    borderRadius: 1,
-    marginTop: 10,
-  },
-  fallingWaruiko: {
-    position: 'absolute',
-    top: height * 0.45,
-    left: width * 0.5 - 20,
+  depositBoxGradient: {
+    flex: 1,
+    borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  purificationEffect: {
+  depositIcon: {
+    fontSize: 20,
+    color: '#fff',
+  },
+  waruikoEmoji: {
+    fontSize: 20,
+    color: '#fff',
+  },
+  star: {
     position: 'absolute',
-    top: height * 0.3,
-    left: width * 0.5 - 100,
-    width: 200,
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
+    backgroundColor: '#fff',
+    borderRadius: 50,
   },
 });
 
