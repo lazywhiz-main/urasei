@@ -12,6 +12,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { DivinationIcon, BackIcon } from '../components/Icons';
 import { drawRandomCard, generateDailyReading, TarotCard } from '../data/tarotCards';
+import { TarotCard as TarotCardComponent } from '../components/TarotCard';
 import {
   hasPerformedTodaysDivination,
   saveDivinationResult,
@@ -182,7 +183,6 @@ const DivinationScreen: React.FC<DivinationScreenProps> = ({ navigation }) => {
         <View style={styles.cardContainer}>
           <Animated.View
             style={[
-              styles.card,
               {
                 transform: [
                   { scale: cardScale },
@@ -191,33 +191,21 @@ const DivinationScreen: React.FC<DivinationScreenProps> = ({ navigation }) => {
               },
             ]}
           >
-            <LinearGradient
-              colors={['#6366f1', '#8b5cf6', '#a855f7']}
-              style={styles.cardGradient}
-            >
-              {showResult && currentResult ? (
-                <View style={styles.cardContent}>
-                  <Text style={styles.cardName}>{currentResult.card.name}</Text>
-                  <Text style={styles.cardPosition}>
-                    {currentResult.isReversed ? '逆位置' : '正位置'}
-                  </Text>
-                  <View style={styles.cardKeywords}>
-                    {currentResult.card.keywords.map((keyword, index) => (
-                      <Text key={index} style={styles.keyword}>
-                        {keyword}
-                      </Text>
-                    ))}
-                  </View>
-                </View>
-              ) : (
-                <View style={styles.cardBack}>
-                  <DivinationIcon size={80} />
-                  <Text style={styles.cardBackText}>
-                    {isDrawing ? '運命を読み取り中...' : 'タップしてカードを引く'}
-                  </Text>
-                </View>
-              )}
-            </LinearGradient>
+            {showResult && currentResult ? (
+              <TarotCardComponent
+                card={currentResult.card}
+                isReversed={currentResult.isReversed}
+                width={width * 0.7}
+                height={width * 0.9}
+              />
+            ) : (
+              <TarotCardComponent
+                card={{ id: 0, name: '', meaning: '', reversedMeaning: '', description: '', keywords: [] }}
+                showBack={true}
+                width={width * 0.7}
+                height={width * 0.9}
+              />
+            )}
           </Animated.View>
         </View>
 
@@ -322,62 +310,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
-  card: {
-    width: width * 0.7,
-    height: width * 0.9,
-    borderRadius: 20,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 20,
-  },
-  cardGradient: {
-    flex: 1,
-    borderRadius: 20,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cardContent: {
-    alignItems: 'center',
-  },
-  cardName: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  cardPosition: {
-    fontSize: 18,
-    color: '#fbbf24',
-    marginBottom: 20,
-  },
-  cardKeywords: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  keyword: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    fontSize: 14,
-    color: '#fff',
-  },
-  cardBack: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  cardBackText: {
-    fontSize: 16,
-    color: '#fff',
-    marginTop: 16,
-    textAlign: 'center',
-  },
+
   drawButton: {
     marginBottom: 30,
     borderRadius: 25,
