@@ -22,6 +22,7 @@ type RootStackParamList = {
   DailyZodiacFortune: undefined;
   ZodiacCompatibility: undefined;
   Horoscope: undefined;
+  Bazi: undefined;
   MoonPhase: undefined;
 };
 
@@ -245,6 +246,13 @@ const AstrologyMenuScreen: React.FC<AstrologyMenuScreenProps> = ({ navigation })
               '詳細な出生図と日運',
               '🌌',
               'Horoscope'
+            )}
+            
+            {renderMenuItem(
+              '四柱推命',
+              '東洋占星術の神髄',
+              '🎋',
+              'Bazi'
             )}
             
             {renderMenuItem(

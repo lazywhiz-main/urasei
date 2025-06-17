@@ -15,6 +15,7 @@ import ZodiacDetectionScreen from './screens/ZodiacDetectionScreen';
 import DailyZodiacFortuneScreen from './screens/DailyZodiacFortuneScreen';
 import ZodiacCompatibilityScreen from './screens/ZodiacCompatibilityScreen';
 import HoroscopeScreen from './screens/HoroscopeScreen';
+import { BaziScreen } from './screens/BaziScreen';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +58,7 @@ export default function App() {
         <Stack.Screen name="DailyZodiacFortune" component={DailyZodiacFortuneScreen} />
         <Stack.Screen name="ZodiacCompatibility" component={ZodiacCompatibilityScreen} />
         <Stack.Screen name="Horoscope" component={HoroscopeScreen} />
+        <Stack.Screen name="Bazi" component={BaziScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
